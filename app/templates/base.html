@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ul#menu li {
+display:inline;
+}
+</style>
+{% if title %}
+<title>{{ title }}</title>
+{% else %}
+<title> No title specified</title>
+{% endif %}
+</head>
+<body>
+<ul id="menu">
+<li><a>Page 1</a></li>
+<li><a>Page 2</a></li>
+<li><a>Page 3</a></li>
+<li><a>Page 4</a></li>
+</ul>
+<div>
+{% block content %}{% endblock %}
+</div>
+</body>
+</html>
