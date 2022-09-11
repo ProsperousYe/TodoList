@@ -77,7 +77,7 @@ def login():
                 return jsonify({"code": 400, "message": "用户不存在"})
         else:
             # print(url_for("user.login"))
-            return redirect(url_for("user.login"))
+            return redirect(url_for("login"))
 
 @app.route('/captcha', methods=['POST'])
 def get_captcha():

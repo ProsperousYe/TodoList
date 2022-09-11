@@ -7,7 +7,7 @@ class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     email = db.Column(db.String(200), nullable=False, unique=True)
-    password = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
     admin = db.Column(db.Boolean, default=False)
     register_datetime = db.Column(db.DateTime, default=datetime.now)
     last_login_datetime = db.Column(db.DateTime, default=datetime.now)
