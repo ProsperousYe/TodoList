@@ -1,4 +1,4 @@
-from app import db
+from .exts import db
 from datetime import datetime
 
 class UserModel(db.Model):
@@ -13,8 +13,8 @@ class UserModel(db.Model):
     last_login_datetime = db.Column(db.DateTime, default=datetime.now)
     todo_list = db.relationship('TodoListModel', backref='user', uselist=True)
 
-    def __repr__(self) -> str:
-        return '<User % r>' % (self.id, self.username, self.admin)
+    # def __repr__(self) -> str:
+    #     return '<User % r>' % (self.id, self.username, self.admin)
 
 class EmailCaptchaModel(db.Model):
     __tablename__ = "email_captcha"

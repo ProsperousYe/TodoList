@@ -8,7 +8,7 @@ function bindCaptchaClick(){
             // 通过js发送网络请求：ajax
             //alert("start ajax")
             $.ajax({
-                url:"/captcha",
+                url:"/user/captcha",
                 method:"POST",
                 data:{
                     "email": email

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title>登录</title>
+    <script src = "{{ url_for('static', filename='jquery/jquery.3.6.min.js') }}"></script>
+    <script src = "{{ url_for('static', filename='js/login.js') }}"></script>
 </head>
 <body>
-<form action="{{ url_for('login') }}" method="POST">
+<form action="{{ url_for('user.login') }}" method="POST">
   <table>
     <tbody>
       <tr>
@@ -14,7 +16,7 @@
         </td>
         <td>
             <label>
-                <input type="text" name="email">
+                <input type="text" name="email" value="{{ email }}">
             </label>
         </td>
       </tr>
@@ -24,7 +26,7 @@
         </td>
         <td>
             <label>
-                <input type="password" name="password">
+                <input type="password" name="password" value="{{ password }}">
             </label>
         </td>
       </tr>
@@ -32,6 +34,14 @@
         <td>
           <button type="submit">登录</button>
         </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="button" id="register_btn">立即注册！</button>
+        </td>
+        <td>
+          <button type="button" id="forget_password_btn">忘记密码？</button>
+        </td>        
       </tr>
     </tbody>
   </table>

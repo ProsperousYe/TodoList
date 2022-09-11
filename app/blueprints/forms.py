@@ -1,7 +1,9 @@
 import wtforms
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, length, email, EqualTo
-from .models import EmailCaptchaModel, UserModel
+
+from app.models import EmailCaptchaModel, UserModel
+# from models import EmailCaptchaModel, UserModel
 
 
 class CalculatorForm(FlaskForm):
