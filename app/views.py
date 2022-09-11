@@ -66,9 +66,15 @@ def login():
             if user_model:
                 if check_password_hash(user_model.password, password):
                     print("登录成功")
-                    user_model.last_login_datetime = datetime.now # 更新最近登录时间
-                    db.session.commit()
-                    return redirect(url_for("router.welcome"))
+                    # try:
+                    #     print(datetime.now)
+                    #     user_model.last_login_datetime = datetime.now # 更新最近登录时间
+                    #     db.session.add(user_model)
+                    #     db.session.commit()
+                    # except Exception as e:
+                    #     db.session.rollback()
+                    #     raise e
+                    return redirect(url_for("index"))
                 else:
                     # print(url_for("user.login"))
                     print("密码不正确")
