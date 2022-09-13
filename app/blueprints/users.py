@@ -3,6 +3,7 @@ from datetime import datetime
 from this import s
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, session
 from flask_mail import Message
+from app.blueprints.admin import show_all_user
 from app.blueprints.forms import LoginForm, RegisterForm
 import string
 from app import db, mail
@@ -70,7 +71,13 @@ def login():
                     except Exception as e:
                         db.session.rollback()
                         raise e
-                    return redirect(url_for("index", username=user_model.username, id=user_model.id))
+                    admin = user_model.admin
+                    if admin:
+                        print(admin)
+                        return redirect(url_for("admin.show_all_user"))
+                    else:
+                        print(admin)
+                        return redirect(url_for("index", username=user_model.username, id=user_model.id))
                 else:
                     # print(url_for("user.login"))
                     print("密码不正确")
