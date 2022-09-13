@@ -46,12 +46,14 @@ def register():
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'GET':
-        # print('get')
-        try:
-            email=session.get(email)
-            password=session.get(password)
+        print('get')
+        email=session.get('email')
+        password=session.get('password')
+        if email!=None and password!=None:
+            print("email:", email)
+            print("password:", password)
             return render_template("login.html", email=email, password=password)
-        except:
+        else:
             return render_template("login.html")
     else:
         # print('post')
@@ -71,6 +73,7 @@ def login():
                     except Exception as e:
                         db.session.rollback()
                         raise e
+                    
                     admin = user_model.admin
                     if admin:
                         print(admin)
