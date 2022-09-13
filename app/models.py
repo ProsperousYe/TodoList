@@ -10,7 +10,7 @@ class UserModel(db.Model):
     password = db.Column(db.String(200), nullable=False)
     admin = db.Column(db.Boolean, default=False)
     register_datetime = db.Column(db.DateTime, default=datetime.now)
-    last_login_datetime = db.Column(db.DateTime, default=datetime.now)
+    state = db.Column(db.Boolean, default=False)
     todo_list = db.relationship('TodoListModel', backref='user', uselist=True)
 
     # def __repr__(self) -> str:

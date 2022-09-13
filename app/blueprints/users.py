@@ -62,15 +62,15 @@ def login():
             if user_model:
                 if check_password_hash(user_model.password, password):
                     print("登录成功")
-                    # try:
-                    #     print(datetime.now)
-                    #     user_model.last_login_datetime = datetime.now # 更新最近登录时间
-                    #     db.session.add(user_model)
-                    #     db.session.commit()
-                    # except Exception as e:
-                    #     db.session.rollback()
-                    #     raise e
-                    return redirect(url_for("index"))
+                    try:
+                        print(datetime.now)
+                        user_model.state = True # 更新用户状态
+                        # db.session.add(user_model)
+                        db.session.commit()
+                    except Exception as e:
+                        db.session.rollback()
+                        raise e
+                    return redirect(url_for("index", username=user_model.username, id=user_model.id))
                 else:
                     # print(url_for("user.login"))
                     print("密码不正确")
@@ -80,6 +80,20 @@ def login():
         else:
             # print(url_for("user.login"))
             return redirect(url_for("login"))
+
+@bp.route('/logout', methods=['POST'])
+def logout():
+    id = request.values.get("id")
+    print(id)
+    user = UserModel.query.filter_by(id=id).first()
+    try:
+        user.state = False
+        db.session.commit()
+        return jsonify({"code": 200})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"code": 400, "message": "登出失败"})
+    
 
 @bp.route('/captcha', methods=['POST'])
 def get_captcha():

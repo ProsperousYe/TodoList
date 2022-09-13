@@ -10,9 +10,12 @@ import string
 from app.blueprints.forms import CalculatorForm
 from .models import UserModel, EmailCaptchaModel
 
-@app.route('/')
-def index():
-    user = {'name': 'Yxk'}
+@app.route('/index/?<username>&<id>')
+def index(username, id):
+    user = {
+        'name': username,
+        'id' : id
+    }
     return render_template('index.html',
                         title = "test",
                         user = user)
