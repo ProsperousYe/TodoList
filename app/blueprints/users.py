@@ -52,7 +52,8 @@ def login():
         if email!=None and password!=None:
             print("email:", email)
             print("password:", password)
-            return render_template("login.html", email=email, password=password)
+            return render_template("login.html", email=email, password=password) 
+            # 123123
         else:
             return render_template("login.html")
     else:
