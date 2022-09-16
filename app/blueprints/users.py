@@ -72,7 +72,7 @@ def login():
                         # db.session.add(user_model)
                         db.session.commit()
                     except Exception as e:
-                        db.session.rollback()
+                        db.session.rollback() 
                         raise e
                     
                     admin = user_model.admin
