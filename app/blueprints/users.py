@@ -52,8 +52,7 @@ def login():
         if email!=None and password!=None:
             print("email:", email)
             print("password:", password)
-            return render_template("login.html", email=email, password=password) 
-            # 123123
+            return render_template("login.html", email=email, password=password)
         else:
             return render_template("login.html")
     else:
@@ -72,15 +71,17 @@ def login():
                         # db.session.add(user_model)
                         db.session.commit()
                     except Exception as e:
-                        db.session.rollback() 
+                        db.session.rollback()
                         raise e
-                    
+                    id = user_model.id
+                    session["id"] = id
+                    session["username"]=user_model.username
+                    session.permanent = True
+                    # print("username in session:",session.get("username"))
                     admin = user_model.admin
                     if admin:
-                        print(admin)
                         return redirect(url_for("admin.show_all_user"))
                     else:
-                        print(admin)
                         return redirect(url_for("index", username=user_model.username, id=user_model.id))
                 else:
                     # print(url_for("user.login"))
@@ -90,25 +91,29 @@ def login():
                 return jsonify({"code": 400, "message": "用户不存在"})
         else:
             # print(url_for("user.login"))
-            return redirect(url_for("login"))
+            return redirect(url_for("user.login"))
 
 @bp.route('/logout', methods=['POST'])
 def logout():
     id = request.values.get("id")
-    print(id)
+    # print(id)
     user = UserModel.query.filter_by(id=id).first()
     try:
+        id = session.get('id')
+        if id:
+            session.delete('id')
+            session.commit()
         user.state = False
         db.session.commit()
         return jsonify({"code": 200})
     except Exception as e:
         db.session.rollback()
         return jsonify({"code": 400, "message": "登出失败"})
-    
 
 @bp.route('/captcha', methods=['POST'])
 def get_captcha():
     email = request.values.get("email")
+    operation = request.values.get("operation")
     print(email)
     letters = string.ascii_letters + string.digits
     captcha = "".join(random.sample(letters, 4))
@@ -117,7 +122,7 @@ def get_captcha():
         message = Message(
             subject="[测试]测试验证码发送",
             recipients=[email],
-            html = render_template('captcha.html', captcha=captcha),
+            html = render_template('captcha.html', operation=operation,captcha=captcha),
             charset='utf-8'
             # body="hi"
             )
@@ -134,3 +139,35 @@ def get_captcha():
         return jsonify({"code": 200})
     else:
         return jsonify({"code": 400, "message": "没有传递邮箱"})
+
+@bp.route("/change_password", methods=['GET', 'POST'])
+def change_password():
+    if request.method == "GET":
+        id = session.get('id')
+        # print('change_password-id in session:',id)
+        user = UserModel.query.filter_by(id=id).first()
+        return render_template("change_password.html", user=user)
+    else:
+        try:
+            id = session.get('id')
+            user = UserModel.query.filter_by(id=id).first()
+        except:
+            return jsonify({"code": 400, "message": "session失效"})
+        old_password = request.form.get('old_password')
+        if not check_password_hash(user.password, old_password):
+            return jsonify({"code": 400, "message": "密码不正确"})
+        captcha = request.form.get("captcha")
+        email = user.email
+        captcha_model = EmailCaptchaModel.query.filter_by(email=email).first()
+        if not captcha_model or captcha_model.captcha.lower() != captcha.lower():
+            return jsonify({"code": 400, "message": "验证码不正确"})
+        new_password = request.form.get("new_password")
+        password_confirm = request.form.get("password_confirm")
+        if not new_password == password_confirm:
+            return jsonify({"code": 400, "message": "密码输入不一致"})
+        hash_password = generate_password_hash(new_password)  # 存入hash形式的密码
+        user.password = hash_password
+        db.session.commit()
+        print("修改密码成功")
+        session.permanent = True
+        return redirect(url_for("user.login", email=email))

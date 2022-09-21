@@ -1,7 +1,5 @@
 function delete_user(){
     $(".delete_user_btn").on("click", function(){
-        let id = $(this).attr("value");
-        console.log(id)
         $.ajax({
             url:"/admin/delete_user",
             method:"POST",

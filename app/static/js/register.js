@@ -11,7 +11,8 @@ function bindCaptchaClick(){
                 url:"/user/captcha",
                 method:"POST",
                 data:{
-                    "email": email
+                    "email": email,
+                    "operation": "Registration"
                 },
                 success: function(res){ //res是视图函数返回的东西
                     let code = res['code'];

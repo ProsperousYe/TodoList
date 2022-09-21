@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Captcha of Register</title>
+    <title>Captcha of {{ operation }}r</title>
     <style>
         table {
             width: 700px;
@@ -135,7 +135,7 @@
                 <div id="content_top">
                     <strong>Dear user:</strong>
                     <strong>
-                        You are<span> Registering </span>right now. Please input the captcha below on the website to continue the registering operation:
+                        You are<span> {{ operation }} </span>right now. Please input the captcha below on the website to continue the registering operation:
                     </strong>
                     <div id="verificationCode">
                         <button class="button" th:each="a:${verifyCode}"> {{captcha[0]}} </button>

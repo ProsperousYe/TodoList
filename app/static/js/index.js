@@ -14,13 +14,19 @@ function log_out(){
                     window.location.href="/user/login"
                 } else {
                     alert(code["message"]);
-                }                
+                }
             }
         })
     })
 }
 
+function change_password(){
+    $("#change_password_btn").on("click", function(){
+        window.location.href="/user/change_password"
+    })
+}
 
 $(function(){
     log_out();
+    change_password();
 });

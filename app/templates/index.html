@@ -9,7 +9,8 @@
         <script src = "{{ url_for('static', filename='js/index.js') }}"></script>
     </head>
     <body>
-        <h1>hello, {{user.name}}</h1>
+        <h1>hello, {{ user.name }}</h1>
     </body>
+    <button type="button" id="change_password_btn" value="{{ user.email }}">修改密码</button>
     <button type="button" id="logout_btn" value="{{ user.id }}">登出</button>
 </html>
