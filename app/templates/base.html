@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-        ul#menu li {
-        display:inline;
-        }
-        </style>
-        {% if title %}
-            <title>{{ title }}</title>
-        {% else %}
-            <title> No title specified</title>
-        {% endif %}
-    </head>
-    <body>
-        <div>
-            {% block content %}{% endblock %}
-        </div>
-    </body>
+  <head>
+    <style>
+      ul#menu li {
+        display: inline;
+      }
+    </style>
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>No title specified</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>{% block content %}{% endblock %}</div>
+  </body>
 </html>

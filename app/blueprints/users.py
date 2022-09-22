@@ -11,7 +11,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.models import EmailCaptchaModel, UserModel
 
-bp = Blueprint("user", __name__, url_prefix="/user")  # 注册了一个bp，名字叫user，前置路径是/user
+# 注册了一个bp，名字叫user，前置路径是/user
+bp = Blueprint("user", __name__, url_prefix="/user")
+
 
 @bp.route('/register', methods=['POST', 'GET'])
 def register():
@@ -35,21 +37,22 @@ def register():
             db.session.add(user)
             db.session.commit()
             print("注册成功")
-            session['email']=email
-            session['password']=password
+            session['email'] = email
+            session['password'] = password
             session.permanent = True
             return redirect(url_for("user.login"))
         else:
             print("注册失败")
             return redirect((url_for("user.register")))
 
+
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'GET':
         print('get')
-        email=session.get('email')
-        password=session.get('password')
-        if email!=None and password!=None:
+        email = session.get('email')
+        password = session.get('password')
+        if email != None and password != None:
             print("email:", email)
             print("password:", password)
             return render_template("login.html", email=email, password=password)
@@ -67,7 +70,7 @@ def login():
                     print("登录成功")
                     try:
                         print(datetime.now)
-                        user_model.state = True # 更新用户状态
+                        user_model.state = True  # 更新用户状态
                         # db.session.add(user_model)
                         db.session.commit()
                     except Exception as e:
@@ -75,7 +78,7 @@ def login():
                         raise e
                     id = user_model.id
                     session["id"] = id
-                    session["username"]=user_model.username
+                    session["username"] = user_model.username
                     session.permanent = True
                     # print("username in session:",session.get("username"))
                     admin = user_model.admin
@@ -93,6 +96,7 @@ def login():
             # print(url_for("user.login"))
             return redirect(url_for("user.login"))
 
+
 @bp.route('/logout', methods=['POST'])
 def logout():
     id = session.get("id")
@@ -106,6 +110,7 @@ def logout():
     else:
         return jsonify({"code": 400, "message": "登出失败"})
 
+
 @bp.route('/captcha', methods=['POST'])
 def get_captcha():
     email = request.values.get("email")
@@ -118,10 +123,11 @@ def get_captcha():
         message = Message(
             subject="[测试]测试验证码发送",
             recipients=[email],
-            html = render_template('captcha.html', operation=operation,captcha=captcha),
+            html=render_template(
+                'captcha.html', operation=operation, captcha=captcha),
             charset='utf-8'
             # body="hi"
-            )
+        )
         mail.send(message)
         captcha_model = EmailCaptchaModel.query.filter_by(email=email).first()
         if captcha_model:
@@ -135,6 +141,7 @@ def get_captcha():
         return jsonify({"code": 200})
     else:
         return jsonify({"code": 400, "message": "没有传递邮箱"})
+
 
 @bp.route("/change_password", methods=['GET', 'POST'])
 def change_password():

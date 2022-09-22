@@ -1,27 +1,43 @@
 <html>
-    <head>
-        {% if title %}
-        <title>{{ title }}</title>
-        {% else %}
-        <title>No title</title>
-        {% endif %}
-        <script src = "{{ url_for('static', filename='jquery/jquery.3.6.min.js') }}"></script>
-        <script src = "{{ url_for('static', filename='js/index.js') }}"></script>
-    </head>
-    <body>
-        <h1>hello, {{ user.name }}</h1>
-    </body>
-    <button type="button" id="change_password_btn" value="{{ user.email }}">修改密码</button>
-    <button type="button" id="logout_btn" value="{{ user.id }}">登出</button>
-    <tabel>
-        <thead>
-            <tr>
-                <td>事项</td>
-                <td></td>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </tabel>
+  <head>
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>No title</title>
+    {% endif %}
+    <script src="{{ url_for('static', filename='jquery/jquery.3.6.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  </head>
+  <body>
+    <h1>hello, {{ user.name }}</h1>
+  </body>
+  <button type="button" id="change_password_btn" value="{{ user.email }}">
+    修改密码
+  </button>
+  <button type="button" id="logout_btn" value="{{ user.id }}">登出</button>
+  <table>
+    <thead>
+      <tr>
+        <td>事项</td>
+        <td>备注</td>
+        <td>时间</td>
+        <td>操作</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in todo_list %}
+      <tr>
+        <td>{{ event.title }}</td>
+        <td>{{ event.content }}</td>
+        <td>{{ event.setting_datetime }}</td>
+        <td>
+          <button type="button" id="delete_event_btn" value="{{ event.id }}"></button>
+        </td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <button type="button" id="add_event_btn" value="{{ user.id }}">添加事件</button>
+      </tr>
+    </tbody>
+  </table>
 </html>

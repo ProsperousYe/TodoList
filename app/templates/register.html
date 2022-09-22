@@ -1,75 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>用户注册</title>
-    <script src = "{{ url_for('static', filename='jquery/jquery.3.6.min.js') }}"></script>
-    <script src = "{{ url_for('static', filename='js/register.js') }}"></script>
-</head>
-<body>
-<form action="{{ url_for('user.register') }}" method="POST">
-  <table>
-    <tbody>
-      <tr>
-        <td>
-          邮箱：
-        </td>
-        <td>
-            <label>
-                <input type="email" name="email">
-            </label>
-        </td>
-      </tr>
-      <tr>
-        <td>
-           验证码：
-        </td>
-        <td>
-            <label>
-                <input type="text" name="captcha">
-            </label>
-        </td>
-          <td>
+    <script src="{{ url_for('static', filename='jquery/jquery.3.6.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+  </head>
+  <body>
+    <form action="{{ url_for('user.register') }}" method="POST">
+      <table>
+        <tbody>
+          <tr>
+            <td>邮箱：</td>
+            <td>
+              <label>
+                <input type="email" name="email" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>验证码：</td>
+            <td>
+              <label>
+                <input type="text" name="captcha" />
+              </label>
+            </td>
+            <td>
               <button type="button" id="captcha-btn">获取验证码</button>
-          </td>
-      </tr>
-      <tr>
-        <td>
-           用户名：
-        </td>
-        <td>
-            <label>
-                <input type="text" name="username">
-            </label>
-        </td>
-      </tr>
-       <tr>
-        <td>
-          密码：
-        </td>
-        <td>
-            <label>
-                <input type="password" name="password">
-            </label>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          请确认密码：
-        </td>
-        <td>
-            <label>
-                <input type="password" name="password_confirm">
-            </label>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <button type="submit">注册</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</form>
-</body>
+            </td>
+          </tr>
+          <tr>
+            <td>用户名：</td>
+            <td>
+              <label>
+                <input type="text" name="username" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>密码：</td>
+            <td>
+              <label>
+                <input type="password" name="password" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>请确认密码：</td>
+            <td>
+              <label>
+                <input type="password" name="password_confirm" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button type="submit">注册</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
 </html>

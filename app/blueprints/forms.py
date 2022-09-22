@@ -35,3 +35,8 @@ class RegisterForm(wtforms.Form):
         user_model = UserModel.query.filter_by(email=email).first()
         if user_model:
             raise wtforms.ValidationError("邮箱已经存在！")
+
+
+class EventForm(wtforms.Form):
+    title = wtforms.StringField(validators=[length(min=1, max=20)])
+    content = wtforms.StringField(validators=[length(min=1, max=200)])

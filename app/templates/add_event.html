@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>用户注册</title>
+    <script src="{{ url_for('static', filename='jquery/jquery.3.6.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/add_event.js') }}"></script>
+  </head>
+  <body>
+    <form action="{{ url_for('event.add_event') }}" method="POST">
+      <table>
+        <tbody>
+          <tr>
+            <td>标题：</td>
+            <td>
+              <label>
+                <input type="text" name="title" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>备注：</td>
+            <td>
+              <label>
+                <textarea type="textarea" name="content"></textarea>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>时间：</td>
+            <td>
+              <label>
+                <input type="datetime-local" name="setting_datetime" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button id="add_event_btn" type="submit">添加事件</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

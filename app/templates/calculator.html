@@ -1,21 +1,16 @@
-{% extends "base.html" %}
-{% block content %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }} </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+{% extends "base.html" %} {% block content %} {% with messages =
+get_flashed_messages() %} {% if messages %}
+<ul>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {% endwith %}
 <h1>Calculator</h1>
 <form action="" method="post" name="calculator">
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.number1 }}<br>
-    </p>
-    <p>{{ form.number2 }}</p>
-    <p><input type="submit" value="Calculate"></p>
+  {{ form.hidden_tag() }}
+  <p>{{ form.number1 }}<br /></p>
+  <p>{{ form.number2 }}</p>
+  <p><input type="submit" value="Calculate" /></p>
 </form>
 {% endblock %}
