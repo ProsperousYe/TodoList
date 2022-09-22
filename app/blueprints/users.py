@@ -95,19 +95,15 @@ def login():
 
 @bp.route('/logout', methods=['POST'])
 def logout():
-    id = request.values.get("id")
-    # print(id)
+    id = session.get("id")
+    print(id)
     user = UserModel.query.filter_by(id=id).first()
-    try:
-        id = session.get('id')
-        if id:
-            session.delete('id')
-            session.commit()
+    if id:
+        session.pop('id')
         user.state = False
         db.session.commit()
         return jsonify({"code": 200})
-    except Exception as e:
-        db.session.rollback()
+    else:
         return jsonify({"code": 400, "message": "登出失败"})
 
 @bp.route('/captcha', methods=['POST'])

@@ -1,7 +1,7 @@
 function bindCaptchaClick(){
     $("#captcha-btn").on("click", function(){
         let $this = $(this);
-        let email =  $(this).attr("value")
+        let email = $("input[name='email']").val()
         if(!email){
             alert("请输入邮箱！");
         } else {
@@ -12,7 +12,7 @@ function bindCaptchaClick(){
                 method:"POST",
                 data:{
                     "email": email,
-                    "operation": "Changing  Password"
+                    "operation": "Registration"
                 },
                 success: function(res){ //res是视图函数返回的东西
                     let code = res['code'];

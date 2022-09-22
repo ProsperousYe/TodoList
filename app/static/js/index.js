@@ -13,7 +13,8 @@ function log_out(){
                     alert("登出成功");
                     window.location.href="/user/login"
                 } else {
-                    alert(code["message"]);
+                    console.log(code)
+                    alert(code);
                 }
             }
         })
