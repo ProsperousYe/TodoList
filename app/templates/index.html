@@ -15,6 +15,7 @@
     修改密码
   </button>
   <button type="button" id="logout_btn" value="{{ user.id }}">登出</button>
+  <button type="button" id="add_todolist_btn" value="{{ user.id }}">新建代办清单</button>
   <table>
     <thead>
       <tr>
@@ -25,19 +26,24 @@
       </tr>
     </thead>
     <tbody>
-      {% for event in todo_list %}
-      <tr>
-        <td>{{ event.title }}</td>
-        <td>{{ event.content }}</td>
-        <td>{{ event.setting_datetime }}</td>
-        <td>
-          <button type="button" id="delete_event_btn" value="{{ event.id }}"></button>
-        </td>
-      </tr>
+      {% for events in lists%}
+      <h2>{{ list.list_name }}</h2>
+        {% for event in events %}
+          {% if event.todo_list_id == list.id %}
+          <tr>
+            <td>{{ event.title }}</td>
+            <td>{{ event.content }}</td>
+            <td>{{ event.setting_datetime }}</td>
+            <td>
+              <button type="button" id="delete_event_btn" value="{{ event.id }}">完成✅</button>
+            </td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+        <tr>
+          <button type="button" id="add_event_btn" value="{{ title.id }}">添加代办事项</button>
+        </tr>
       {% endfor %}
-      <tr>
-        <button type="button" id="add_event_btn" value="{{ user.id }}">添加事件</button>
-      </tr>
     </tbody>
   </table>
 </html>

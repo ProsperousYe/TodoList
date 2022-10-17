@@ -12,7 +12,7 @@ function bindCaptchaClick() {
         method: "POST",
         data: {
           email: email,
-          operation: "Changing  Password",
+          operation: "Changing Password",
         },
         success: function (res) {
           //res是视图函数返回的东西

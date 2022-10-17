@@ -29,12 +29,34 @@ function change_password() {
 
 function add_event() {
   $("#add_event_btn").on("click", function () {
+    const list_id = $(this).attr("value");
     window.location.href = "/event/add_event";
   });
+}
+
+function add_todolist() {
+  $("#add_todolist_btn").on("click", function () {
+    window.location.href = "/event/add_todolist";
+  });
+}
+
+function load_event(){
+  $.ajax({
+    method: 'GET',
+    url: '/event/load_event',
+    success:function(res){
+      const code = res['code']
+      if(code === 200){
+      } else {
+      }
+    }
+  })
 }
 
 $(function () {
   log_out();
   change_password();
   add_event();
+  add_todolist();
+  load_event();
 });

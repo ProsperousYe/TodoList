@@ -59,9 +59,9 @@ def login():
         else:
             return render_template("login.html")
     else:
-        # print('post')
         form = LoginForm(request.form)
         if form.validate():
+            print("post")
             email = request.values.get("email")
             password = request.values.get("password")
             user_model = UserModel.query.filter_by(email=email).first()
@@ -85,6 +85,7 @@ def login():
                     if admin:
                         return redirect(url_for("admin.show_all_user"))
                     else:
+                        # return jsonify({"code": 200})
                         return redirect(url_for("index", username=user_model.username, id=user_model.id))
                 else:
                     # print(url_for("user.login"))
@@ -94,6 +95,7 @@ def login():
                 return jsonify({"code": 400, "message": "用户不存在"})
         else:
             # print(url_for("user.login"))
+            print("not valid")
             return redirect(url_for("user.login"))
 
 

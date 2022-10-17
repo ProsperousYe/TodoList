@@ -5,9 +5,12 @@ from .exts import db, mail
 from flask_migrate import Migrate
 from flask_mail import Mail
 from .blueprints import user_bp, admin_bp, event_bp
+from flask_cors import CORS
+
 
 app = Flask(__name__)
 app.config.from_object('config')
+CORS(app, supports_credentials=True)
 db.init_app(app)
 
 # manager = Manager(app)

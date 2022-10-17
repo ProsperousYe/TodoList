@@ -49,4 +49,4 @@ class EventModel(db.Model):
     finished_datetime = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self) -> str:
-        return '<Event % r>' % (self.id, self.todo_list_id, self.title, self.content, self.setting_time, self.finished)
+        return '<Event % r>' % (self.id, self.todo_list_id, self.title, self.content, self.setting_datetime, self.finished)

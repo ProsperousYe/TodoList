@@ -40,3 +40,6 @@ class RegisterForm(wtforms.Form):
 class EventForm(wtforms.Form):
     title = wtforms.StringField(validators=[length(min=1, max=20)])
     content = wtforms.StringField(validators=[length(min=1, max=200)])
+
+class TodoListForm(wtforms.Form):
+    todolist_name = wtforms.StringField(validators=[length(min=1, max=20)])
