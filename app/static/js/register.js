@@ -18,17 +18,19 @@ function bindCaptchaClick() {
           //res是视图函数返回的东西
           let code = res["code"];
           if (code === 200) {
-            alert("验证码发送成功！");
+            alert("Captcha sent successfully!");
             $this.off("click");
+            $this.attr("disabled",true);
             let countDown = 60;
             let timer = setInterval(function () {
               countDown--;
               if (countDown > 0) {
-                $this.text(countDown + "秒后重新发送");
+                $this.text("Resent in "+countDown + "s");
                 //完成之后可以重新点击
               } else {
                 //clearInterval(timer);
-                $this.text("点击发送验证码");
+                $this.text("Get captcha");
+                $this.attr("disabled",false);
                 bindCaptchaClick();
                 clearInterval(timer); //  清除计时器
               }
