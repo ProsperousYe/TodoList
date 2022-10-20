@@ -117,7 +117,6 @@ def logout():
 def get_captcha():
     email = request.values.get("email")
     operation = request.values.get("operation")
-    print(email)
     letters = string.ascii_letters + string.digits
     captcha = "".join(random.sample(letters, 4))
     if email:

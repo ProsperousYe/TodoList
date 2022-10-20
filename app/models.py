@@ -26,14 +26,11 @@ class EmailCaptchaModel(db.Model):
 class TodoListModel(db.Model):
     '''事项列表 表'''
     __tablename__ = "todo_list"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    list_name = db.Column(db.String(20), index=True, unique=True)
+    list_name = db.Column(db.String(20), index=True)
     limit = db.Column(db.Integer)
     events = db.relationship('EventModel', backref='todo_list', uselist=True)
-
-    def __repr__(self) -> str:
-        return '<TodoList % r>' % (self.id, self.user_id, self.list_name)
 
 
 class EventModel(db.Model):
@@ -47,6 +44,3 @@ class EventModel(db.Model):
     setting_datetime = db.Column(db.DateTime)
     finished = db.Column(db.Boolean, default=False)
     finished_datetime = db.Column(db.DateTime, nullable=True)
-
-    def __repr__(self) -> str:
-        return '<Event % r>' % (self.id, self.todo_list_id, self.title, self.content, self.setting_datetime, self.finished)
