@@ -80,7 +80,7 @@ def login():
                     session["id"] = id
                     session["username"] = user_model.username
                     session.permanent = True
-                    # print("username in session:",session.get("username"))
+                    print("id in session:",session.get("id"))
                     admin = user_model.admin
                     if admin:
                         return redirect(url_for("admin.show_all_user"))

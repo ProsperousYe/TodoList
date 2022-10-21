@@ -63,16 +63,35 @@ function load_event(){
       dataType: 'json',
       url: '/event/load_event',
       data:{
-        id: id,
+        list_id: id,
       }
     }).then((res) =>{
       if(res.code==200){
-        console.log(res)
+        // console.log(res)
         events.html(res.message)
         add_event();
+        countDown();
       }
     })
   });
+}
+
+function countDown() {
+  let event_count_down = $("#countdown")
+  // console.log(event_count_down.attr("value"))
+  const showTime = function(){
+    let due = event_count_down.attr("value");
+    let now_time = new Date().getTime();
+    let left_time = due - now_time,
+        left_d = Math.floor(left_time/(1000*60*60*24)),  //计算天数
+        left_h = Math.floor(left_time/(1000*60*60)%24),  //计算小时数
+        left_m = Math.floor(left_time/(1000*60)%60),  //计算分钟数
+        lefts = Math.floor(left_time/1000%60);  //计算秒数
+      return left_d + "D" + left_h + ":" + left_m + ":" + lefts;
+  }
+  setInterval (function () {
+    event_count_down.innerHTML = showTime();
+  }, 1000);  //反复执行函数本身
 }
 
 function load_todo_list(){
@@ -102,11 +121,11 @@ function load_todo_list(){
         dataType: 'json',
         url: '/event/load_event',
         data:{
-          id: id,
+          list_id: id,
         }
       }).then((res) =>{
         if(res.code==200){
-          console.log(res)
+          // console.log(res)
           events.html(res.message)
           add_event();
         }
@@ -117,6 +136,7 @@ function load_todo_list(){
 }
 
 $(function () {
+  countDown();
   log_out();
   change_password();
   add_todolist();

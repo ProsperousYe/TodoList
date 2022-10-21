@@ -19,15 +19,18 @@ def add_event():
     if request.method == 'GET':
         return render_template('add_event.html')
     else:
-        user_id=session.get("id")
-        user=UserModel.query.filter_by(id=user_id).first()
+        # user_id=request.values.get("user_id")
+        user_id = session.get('id')
+        user=UserModel.query.filter(UserModel.id==user_id).first()
+        print(user_id)
         id = request.values.get("list_id")
         form = EventForm(request.form)
         if form.validate():
             title = form.event_name.data
             content = form.event_description.data
             setting_datetime = request.values.get("event_finish_time")
-            todo_list = TodoListModel.query.filter_by(id=id).first()
+            todo_list = TodoListModel.query.filter(TodoListModel.id==id).first()
+            print(id)
             if todo_list:
                 event = EventModel(
                     title=title, content=content, setting_datetime=setting_datetime,todo_list_id=id,
@@ -43,10 +46,12 @@ def add_event():
 
 @bp.route('/load_event', methods=['POST'])
 def load_event():
-    id = request.values.get("id")
-    # print("id",id)
-    events = EventModel.query.filter_by(todo_list_id=id).all()
-    return jsonify(code=200, message=render_template('show_event.html', events=events, list_id=id))
+    user_id = request.values.get('user_id')
+    user = UserModel.query.filter(UserModel.id==user_id).first()
+    list_id = request.values.get("list_id")
+    print("list id:",list_id)
+    events = EventModel.query.filter(EventModel.todo_list_id==list_id).all()
+    return jsonify(code=200, message=render_template('show_event.html',user=user, events=events, list_id=list_id))
 
 @bp.route('/add_todolist', methods=['POST', 'GET'])
 def add_todolist():
@@ -57,7 +62,7 @@ def add_todolist():
         form = TodoListForm(request.form)
         if form.validate():
             list_name = form.todo_list_name.data
-            user = UserModel.query.filter(id == id).first()
+            user = UserModel.query.filter(UserModel.id == id).first()
             if user:
                 todo_list = TodoListModel(
                     user_id = id, list_name=list_name, limit=20
@@ -74,7 +79,8 @@ def add_todolist():
 def load_todolist():
     id = session.get('id')
     user = UserModel.query.filter(id == id).first()
-    todoLists = TodoListModel.query.all()
+    print(id)
+    todoLists = TodoListModel.query.filter(TodoListModel.user_id==id).all()
     # if len(todoLists) > 0:
     #     return redirect(url_for("index", username=user.username, id=user.id, todoLists=todoLists))
     # else:

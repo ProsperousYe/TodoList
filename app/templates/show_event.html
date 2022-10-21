@@ -1,46 +1,61 @@
 {% if not events %}
 <h1>Add any event</h1>
 {% endif %}
+<label class="form-label"></label>
 {% for event in events %}
-<div>
-  <label class="form-label">{{event.event_title}}</label>
-  <label class="form-label">{{event.content}}</label>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <h5 class="card-title">{{event.title}}</h5>
+        <p class="card-text">{{event.content}}</p>
+      </div>
+      <div class="col-6">
+        <p class="card-text" id="countdown" value="{{event.setting_datetime | tojson()}}">{{event.setting_datetime}}</p>
+      </div>
+    </div>
+    <button class="btn btn-primary finished-btn" value="{{event.id}}">Finished</button>
+  </div>
 </div>
+<label class="form-label"></label>
 {% endfor %}
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event_btn" value="{{ list_id }}">
-  + Add Event
+<div class="contianer">
+  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event_btn" value="{{ list_id }}">
+    + Add Event
   </button>
+</div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-  <div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-  <form id="form1" action="{{ url_for('event.add_event') }}" method="POST">
-    <div class="modal-body">
-      <div class="md-3">
-        <label for="event_name" class="form-label">Event name:</label>
-        <input type="text" class="form-control" id="event_name" name="event_name" />
-      </div>
-      <div class="md-3">
-        <label for="event_description" class="form-label">Event description:</label>
-        <textarea class="form-control" id="event_description" name="event_description"></textarea>
-      </div>
-      <div class="md-3">
-        <label for="event_ddl" class="form-label">Finish time:</label>
-        <input type="datetime-local" class="form-control" id="event_finish_time" name="event_finish_time" />
-      </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form id="form1" action="{{ url_for('event.add_event') }}" method="POST">
+  <div class="modal-body">
+    <div class="md-3">
+      <label for="event_name" class="form-label">Event name:</label>
+      <input type="text" class="form-control" id="event_name" name="event_name" />
     </div>
-    <input type="hidden" value="{{list_id}}" name="list_id" id="list_id" />
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="submit" class="btn btn-primary">Confirm</button>
+    <div class="md-3">
+      <label for="event_description" class="form-label">Event description:</label>
+      <textarea class="form-control" id="event_description" name="event_description"></textarea>
     </div>
-  </form>
+    <div class="md-3">
+      <label for="event_ddl" class="form-label">Finish time:</label>
+      <input type="datetime-local" class="form-control" id="event_finish_time" name="event_finish_time" />
+    </div>
   </div>
+  <input type="hidden" value="{{list_id}}" name="list_id" id="list_id" />
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Confirm</button>
   </div>
-  </div>
+</form>
+</div>
+</div>
+</div>
