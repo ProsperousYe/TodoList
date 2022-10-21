@@ -69,29 +69,47 @@ function load_event(){
       if(res.code==200){
         // console.log(res)
         events.html(res.message)
-        add_event();
         countDown();
       }
     })
   });
 }
 
+const showTime = function(due_time){
+  let now_time = new Date().getTime();
+  let left_time = due_time - now_time,
+      left_d = Math.floor(left_time/(1000*60*60*24)),  //计算天数
+      left_h = Math.floor(left_time/(1000*60*60)%24),  //计算小时数
+      left_m = Math.floor(left_time/(1000*60)%60),  //计算分钟数
+      lefts = Math.floor(left_time/1000%60),  //计算秒数
+      left = left_d + "Days " + left_h + "Hours " + left_m + "Mins " + lefts + "Secs left";
+      // console.log(left)
+    return left;
+}
+
 function countDown() {
-  let event_count_down = $("#countdown")
-  // console.log(event_count_down.attr("value"))
-  const showTime = function(){
-    let due = event_count_down.attr("value");
-    let now_time = new Date().getTime();
-    let left_time = due - now_time,
-        left_d = Math.floor(left_time/(1000*60*60*24)),  //计算天数
-        left_h = Math.floor(left_time/(1000*60*60)%24),  //计算小时数
-        left_m = Math.floor(left_time/(1000*60)%60),  //计算分钟数
-        lefts = Math.floor(left_time/1000%60);  //计算秒数
-      return left_d + "D" + left_h + ":" + left_m + ":" + lefts;
-  }
-  setInterval (function () {
-    event_count_down.innerHTML = showTime();
-  }, 1000);  //反复执行函数本身
+  $(".countdown").each(function(){
+    let th = $(this);
+    let due = th.attr("value");
+    // console.log(due)
+    let st = due.split(" ")
+    let time = st[1].split(":")
+    let year_s = st[0].split("-")
+    let hour = time[0]
+    let min = time[1]
+    let sec = time[2]
+    let year = year_s[0]
+    let month = year_s[1]
+    let day = year_s[2]
+    // console.log("year:"+year+"month:"+month+"day:"+day+"hour:"+hour+"min:"+min+"sec:"+sec)
+    let due_time = new Date(year,month,day,hour,min,sec)
+    //console.log(show_time)
+    setInterval(function () {
+      let show_time = showTime(due_time)
+      th.html(show_time);
+      // console.log(showTime(due_time));
+    },1000);  //反复执行函数本身
+  })
 }
 
 function load_todo_list(){
@@ -127,7 +145,7 @@ function load_todo_list(){
         if(res.code==200){
           // console.log(res)
           events.html(res.message)
-          add_event();
+          countDown();
         }
       })
       load_event(); // 注册点击事件
@@ -136,7 +154,6 @@ function load_todo_list(){
 }
 
 $(function () {
-  countDown();
   log_out();
   change_password();
   add_todolist();

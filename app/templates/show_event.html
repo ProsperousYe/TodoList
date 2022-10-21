@@ -11,7 +11,7 @@
         <p class="card-text">{{event.content}}</p>
       </div>
       <div class="col-6">
-        <p class="card-text" id="countdown" value="{{event.setting_datetime | tojson()}}">{{event.setting_datetime}}</p>
+        <p class="card-text countdown" value="{{event.setting_datetime.strftime("%Y-%m-%d %H:%M:%S")}}">{{event.setting_datetime}}</p>
       </div>
     </div>
     <button class="btn btn-primary finished-btn" value="{{event.id}}">Finished</button>
