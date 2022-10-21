@@ -45,7 +45,7 @@
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid  flex-column ">
               <ul class="navbar-nav mb-2 mb-lg-0 flex-column" id="ver_nav">
-                <div id="todo_lists">
+                <div id="todo_lists" class="button-group-vertical d-grid" data-toggle="buttons">
                   <!-- ajax by jquery return the todo_lists here -->
                 </div>
                 <li class="nav-item">
@@ -57,10 +57,8 @@
             </div>
           </nav>
         </div>
-        <div class="col-md-auto">
-          <!--  -->
-          {% from 'show_event.html' import show_event %}
-          {{ show_event() }}
+        <div class="col-md-auto" id="events">
+          <!-- jquery 请求页面 -->
         </div>
       </div>
     </div>

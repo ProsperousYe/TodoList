@@ -21,16 +21,16 @@ def add_event():
     else:
         user_id=session.get("id")
         user=UserModel.query.filter_by(id=user_id).first()
-        id = request.value.get("id")
+        id = request.values.get("list_id")
         form = EventForm(request.form)
         if form.validate():
-            title = form.title.data
-            content = form.content.data
-            setting_datetime = request.values.get("setting_datetime")
+            title = form.event_name.data
+            content = form.event_description.data
+            setting_datetime = request.values.get("event_finish_time")
             todo_list = TodoListModel.query.filter_by(id=id).first()
             if todo_list:
                 event = EventModel(
-                    title=title, content=content, setting_datetime=setting_datetime,
+                    title=title, content=content, setting_datetime=setting_datetime,todo_list_id=id,
                     create_datetime=datetime.now()
                 )
                 db.session.add(event)
@@ -46,7 +46,7 @@ def load_event():
     id = request.values.get("id")
     # print("id",id)
     events = EventModel.query.filter_by(todo_list_id=id).all()
-    return jsonify({'code': 200, 'events': [events]})
+    return jsonify(code=200, message=render_template('show_event.html', events=events, list_id=id))
 
 @bp.route('/add_todolist', methods=['POST', 'GET'])
 def add_todolist():
