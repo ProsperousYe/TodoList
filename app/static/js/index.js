@@ -50,7 +50,7 @@ function add_event() {
 
 function add_todolist() {
   $("#add_todolist_btn").on("click", function () {
-    window.location.href = "/event/add_todolist";
+    
   });
 }
 

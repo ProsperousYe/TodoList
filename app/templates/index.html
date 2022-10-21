@@ -49,9 +49,33 @@
                   <!-- ajax by jquery return the todo_lists here -->
                 </div>
                 <li class="nav-item">
-                  <button class="btn btn-success" type="button" id="add_todolist_btn" value="{{ user.id }}">
+                  <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#TodoListModal" id="add_todolist_btn" value="{{ user.id }}">
                     + New TodoList
                   </button>
+                  <div class="modal fade" id="TodoListModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Create a new TodoList</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="form1" action="{{ url_for('event.add_todolist') }}" method="POST">
+                      <div class="modal-body">
+                        <div class="md-3">
+                          <label class="from-label" for="todo_list_name">TodoList Name</label>
+                          <input type="text" class="from-control" id="todo_list_name" name="todo_list_name" />
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" id="add_event_btn" type="submit">
+                          Add TodoList
+                        </button>
+                      </div>
+                    </form>
+                    </div>
+                    </div>
+                  </div>
                 </li>
               </ul>
             </div>
