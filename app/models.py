@@ -28,7 +28,7 @@ class TodoListModel(db.Model):
     __tablename__ = "todo_list"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    list_name = db.Column(db.String(20), index=True)
+    list_name = db.Column(db.String(20),unique=False)
     limit = db.Column(db.Integer)
     events = db.relationship('EventModel', backref='todo_list', uselist=True)
 
@@ -38,7 +38,7 @@ class EventModel(db.Model):
     __tablename__ = "event"
     id = db.Column(db.Integer, primary_key=True)
     todo_list_id = db.Column(db.Integer, db.ForeignKey('todo_list.id'))
-    title = db.Column(db.String(20), index=True)
+    title = db.Column(db.String(20))
     content = db.Column(db.Text(100))
     create_datetime = db.Column(db.DateTime)
     setting_datetime = db.Column(db.DateTime)

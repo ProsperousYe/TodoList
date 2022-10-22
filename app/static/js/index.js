@@ -104,6 +104,9 @@ function countDown() {
     // console.log("year:"+year+"month:"+month+"day:"+day+"hour:"+hour+"min:"+min+"sec:"+sec)
     let due_time = new Date(year,month,day,hour,min,sec)
     //console.log(show_time)
+    // 立即执行一次，之后再每秒更新
+    let show_time = showTime(due_time)
+    th.html(show_time);
     setInterval(function () {
       let show_time = showTime(due_time)
       th.html(show_time);
