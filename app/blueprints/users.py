@@ -45,7 +45,6 @@ def register():
             print("注册失败")
             return redirect((url_for("user.register")))
 
-
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'GET':

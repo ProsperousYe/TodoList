@@ -54,3 +54,7 @@ def forget_password():
         print("修改密码成功")
         session.permanent = True
         return redirect(url_for("user.login", email=email))
+
+@app.route("/", methods=["GET", "POST"])
+def default():
+    return redirect(url_for("user.login"))

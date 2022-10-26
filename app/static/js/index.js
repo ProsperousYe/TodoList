@@ -70,6 +70,7 @@ function load_event(){
         // console.log(res)
         events.html(res.message)
         countDown();
+        finished()
       }
     })
   });
@@ -149,10 +150,29 @@ function load_todo_list(){
           // console.log(res)
           events.html(res.message)
           countDown();
+          finished()
         }
       })
       load_event(); // 注册点击事件
     }
+  })
+}
+
+function finished(){
+  $(".finished-btn").on('click',function(){
+    let id = $(this).attr("value")
+    console.log(id)
+    $.ajax({
+      method:"POST",
+      datatype:"json",
+      url:"/event/finished_event",
+      data:{
+        id : id,
+      }
+    }).then((res)=>{
+      console.log(res)
+      location.reload();
+    })
   })
 }
 

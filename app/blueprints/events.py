@@ -92,3 +92,18 @@ def load_todolist():
             'list_name': todoList.list_name,
         })
     return jsonify(code=200, message = lists)
+
+@bp.route('/finished_event', methods=['POST'])
+def finished_event():
+    id = request.values.get('id')
+    event = EventModel.query.filter(EventModel.id == id).first()
+    if event:
+        event.finished = True
+        db.session.commit()
+        return jsonify({"code": 200, "message": "Event finished!"})
+    else:
+        return jsonify({"code": 400, "message": "Invalid event id!"})
+
+@bp.route('/edit_event', methods=['POST'])
+def edit_event():
+    id = request.values.get('id')

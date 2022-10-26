@@ -3,6 +3,7 @@
 {% endif %}
 <label class="form-label"></label>
 {% for event in events %}
+{% if event.finished == False %}
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <div class="row">
@@ -15,9 +16,11 @@
       </div>
     </div>
     <button class="btn btn-primary finished-btn" value="{{event.id}}">Finished</button>
+    <button class="btn btn-secondary edit-btn" value="{{evefnt.id}}">Edit</button>
   </div>
 </div>
 <label class="form-label"></label>
+{% endif%}
 {% endfor %}
 <!-- Button trigger modal -->
 <div class="contianer">
@@ -59,3 +62,36 @@
 </div>
 </div>
 </div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit the event</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <form id="form2" action="{{ url_for('event.edit_event') }}" method="POST">
+    <div class="modal-body">
+      <div class="md-3">
+        <label for="event_name" class="form-label">Event name:</label>
+        <input type="text" class="form-control" id="event_name" name="event_name" />
+      </div>
+      <div class="md-3">
+        <label for="event_description" class="form-label">Event description:</label>
+        <textarea class="form-control" id="event_description" name="event_description"></textarea>
+      </div>
+      <div class="md-3">
+        <label for="event_ddl" class="form-label">Finish time:</label>
+        <input type="datetime-local" class="form-control" id="event_finish_time" name="event_finish_time" />
+      </div>
+    </div>
+    <input type="hidden" value="{{event.id}}" name="list_id" id="list_id" />
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-primary">Confirm</button>
+    </div>
+  </form>
+  </div>
+  </div>
+</div>
+
