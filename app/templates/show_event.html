@@ -1,3 +1,13 @@
+<div class="row">
+  <label class="from-label"></label>
+</div>
+{% if list_id != 0 %}
+<div class="contianer">
+  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event_btn" value="{{ list_id }}">
+    + Add Event
+  </button>
+</div>
+{% endif %}
 {% if not events %}
 <h1>Add any event</h1>
 {% endif %}
@@ -7,27 +17,154 @@
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <div class="row">
-      <div class="col-6">
-        <h5 class="card-title">{{event.title}}</h5>
-        <p class="card-text">{{event.content}}</p>
+      <div class="col-9">
+        <h5 class="card-title">
+          {% if event.label == 1 %}
+          <span class="badge bg-danger p-2 border border-light rounded-circle"> </span>
+          {% elif event.label == 2 %}
+          <span class="badge bg-primary p-2 border border-light rounded-circle"> </span>
+          {% elif event.label == 3 %}
+          <span class="badge bg-warning p-2 border border-light rounded-circle"> </span>
+          {% elif event.label == 4 %}
+          <span class="badge bg-success p-2 border border-light rounded-circle"> </span>
+          {% elif event.label == 5 %}
+          <span class="badge bg-secondary p-2 border border-light rounded-circle"> </span>
+          {% endif %}
+          {{event.title}}</h5>
       </div>
-      <div class="col-6">
-        <p class="card-text countdown" value="{{event.setting_datetime.strftime("%Y-%m-%d %H:%M:%S")}}"></p>
+      <div class="col-3">
+        <button class="btn btn-secondary-outline edit-btn" data-bs-toggle="modal" data-bs-target="#editModal_{{event.id}}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+        </button>
       </div>
     </div>
+    <p class="card-text">{{event.content}}</p>
+    <!-- <div class="row"> -->
+      {% if event.duration-event.gone_days>0 %}
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated event-progress" role="progressbar" aria-valuenow="{{event.gone_days}}" aria-valuemin="0" aria-valuemax="{{event.duration}}">
+          {{event.duration-event.gone_days}}/{{event.duration}}
+        </div>
+      </div>
+      {% elif event.duration-event.gone_days == 0 %}
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:100%" aria-valuemin="0">
+          Submit at {{event.setting_time}} !
+        </div>
+      </div>
+      {% endif %}
+    <!-- </div> -->
+    <div class="row">
+      <label class="form-label"></label>
+    </div>
     <button class="btn btn-primary finished-btn" value="{{event.id}}">Finished</button>
-    <button class="btn btn-secondary edit-btn" value="{{evefnt.id}}">Edit</button>
   </div>
 </div>
 <label class="form-label"></label>
-{% endif%}
+{% endif %}
+<div class="modal fade" id="editModal_{{event.id}}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit the work {{event.title}}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <form id="form2" action="{{ url_for('event.edit_event') }}" method="POST">
+    <div class="modal-body">
+      <div class="md-3">
+        <label for="event_name" class="form-label">Event name:</label>
+        <input type="text" class="form-control" id="event_name" name="event_name" value="{{event.title}}"/>
+      </div>
+      <div class="md-3">
+        <label for="event_description" class="form-label">Event description:</label>
+        <textarea class="form-control" id="event_description" name="event_description">{{event.content}}</textarea>
+      </div>
+      <div class="md-3">
+        <!-- <label for="event_ddl" class="form-label">Finish date time:</label> -->
+        <div class="row">
+          <div class="col-8">
+            <label class="from-label">Dead Date:</label>
+            <input type="date" class="form-control" id="event_finish_date" name="event_finish_date"/>
+          </div>
+          <div class="col-4">
+            <label class="from-label">Dead Time:</label>
+            <input type="time" class="form-control" id="event_finish_time" name="event_finish_time" value="{{event.setting_time}}"/>
+          </div>
+        </div>
+        <!-- <input type="datatime-local" class="form-select" aria-label="Default select example" /> -->
+      </div>
+      <div class="md-3">
+        <label for="label" class="from-label">Label:</label>
+        <div class="row">
+        <div class="col-1"></div>
+        <div class="form-check col">
+            {% if event.label == 1 %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault1" value="1" checked>
+            {% else %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault1" value="1">
+            {% endif %}
+            <label class="form-check-label" for="flexRadioDefault1">
+              <span class="badge bg-danger">Red</span>
+            </label>
+          </div>
+          <div class="form-check col">
+            {% if event.label == 2 %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault2" value="2" checked>
+            {% else %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault2" value="2">
+            {% endif %}
+            <label class="form-check-label" for="flexRadioDefault2">
+              <span class="badge bg-primary">Blue</span>
+            </label>
+          </div>
+          <div class="form-check col">
+            {% if event.label == 3 %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault3" value="3" checked>
+            {% else %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault3" value="3">
+            {% endif %}
+            <label class="form-check-label" for="flexRadioDefault3">
+              <span class="badge bg-warning">Yellow</span>
+            </label>
+          </div>
+          <div class="form-check col">
+            {% if event.label == 4 %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault4" value="4" checked>
+            {% else %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault4" value="4">
+            {% endif %}
+            <label class="form-check-label" for="flexRadioDefault4">
+              <span class="badge bg-success">Green</span>
+            </label>
+          </div>
+          <div class="form-check col">
+            {% if event.label == 5%}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault5" value="5" checked>
+            {% else %}
+            <input class="form-check-input" type="radio" name="label" id="flexRadioDefault5" value="5">
+            {% endif %}
+            <label class="form-check-label" for="flexRadioDefault5">
+              <span class="badge bg-secondary">Other</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" value="{{event.id}}" name="event_id" id="event_id" />
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-primary">Confirm</button>
+    </div>
+  </form>
+  </div>
+  </div>
+</div>
 {% endfor %}
 <!-- Button trigger modal -->
-<div class="contianer">
-  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event_btn" value="{{ list_id }}">
-    + Add Event
-  </button>
-</div>
+
 
 
 <!-- Modal -->
@@ -49,8 +186,54 @@
       <textarea class="form-control" id="event_description" name="event_description"></textarea>
     </div>
     <div class="md-3">
-      <label for="event_ddl" class="form-label">Finish time:</label>
-      <input type="datetime-local" class="form-control" id="event_finish_time" name="event_finish_time" />
+      <!-- <label for="event_ddl" class="form-label">Finish date time:</label> -->
+      <div class="row">
+        <div class="col-8">
+          <label class="from-label">Dead Date:</label>
+          <input type="date" class="form-control" id="event_finish_date" name="event_finish_date" />
+        </div>
+        <div class="col-4">
+          <label class="from-label">Dead Time:</label>
+          <input type="time" class="form-control" id="event_finish_time" name="event_finish_time" />
+        </div>
+      </div>
+      <!-- <input type="datatime-local" class="form-select" aria-label="Default select example" /> -->
+    </div>
+    <div class="md-3">
+      <label for="label" class="from-label">Label:</label>
+      <div class="row">
+      <div class="col-1"></div>
+      <div class="form-check col">
+          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault1" value="1">
+          <label class="form-check-label" for="flexRadioDefault1">
+            <span class="badge bg-danger">Red</span>
+          </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault2" value="2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            <span class="badge bg-primary">Blue</span>
+          </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault3" value="3">
+          <label class="form-check-label" for="flexRadioDefault3">
+            <span class="badge bg-warning">Yellow</span>
+          </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault4" value="4">
+          <label class="form-check-label" for="flexRadioDefault4">
+            <span class="badge bg-success">Green</span>
+          </label>
+        </div>
+        <div class="form-check col">
+          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault5" value="5" checked>
+          <label class="form-check-label" for="flexRadioDefault5">
+            <span class="badge bg-secondary">Other</span>
+          </label>
+        </div>
+      </div>
     </div>
   </div>
   <input type="hidden" value="{{list_id}}" name="list_id" id="list_id" />
@@ -63,35 +246,5 @@
 </div>
 </div>
 
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-  <div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Edit the event</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-  <form id="form2" action="{{ url_for('event.edit_event') }}" method="POST">
-    <div class="modal-body">
-      <div class="md-3">
-        <label for="event_name" class="form-label">Event name:</label>
-        <input type="text" class="form-control" id="event_name" name="event_name" />
-      </div>
-      <div class="md-3">
-        <label for="event_description" class="form-label">Event description:</label>
-        <textarea class="form-control" id="event_description" name="event_description"></textarea>
-      </div>
-      <div class="md-3">
-        <label for="event_ddl" class="form-label">Finish time:</label>
-        <input type="datetime-local" class="form-control" id="event_finish_time" name="event_finish_time" />
-      </div>
-    </div>
-    <input type="hidden" value="{{event.id}}" name="list_id" id="list_id" />
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="submit" class="btn btn-primary">Confirm</button>
-    </div>
-  </form>
-  </div>
-  </div>
-</div>
+
 

@@ -37,10 +37,17 @@ class EventModel(db.Model):
     '''事项表'''
     __tablename__ = "event"
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     todo_list_id = db.Column(db.Integer, db.ForeignKey('todo_list.id'))
     title = db.Column(db.String(20))
     content = db.Column(db.Text(100))
+    label = db.Column(db.Integer)
     create_datetime = db.Column(db.DateTime)
-    setting_datetime = db.Column(db.DateTime)
+    setting_year = db.Column(db.Integer)
+    setting_month = db.Column(db.Integer)
+    setting_date = db.Column(db.Integer)
+    setting_time = db.Column(db.Time)
+    duration = db.Column(db.Integer)
+    gone_days = db.Column(db.Integer)
     finished = db.Column(db.Boolean, default=False)
     finished_datetime = db.Column(db.DateTime, nullable=True)

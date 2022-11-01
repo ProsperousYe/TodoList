@@ -1,6 +1,6 @@
 from config import SQLALCHEMY_DATABASE_URI
-from app import db
-import os.path
+from app.exts import db
+from app import app
 
-db.create_all()
-#db.drop_all()
+with app.app_context():
+    db.create_all()

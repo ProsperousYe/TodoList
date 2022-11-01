@@ -46,8 +46,18 @@
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid  flex-column ">
               <ul class="navbar-nav mb-2 mb-lg-0 flex-column" id="ver_nav">
-                <div id="todo_lists" class="button-group-vertical d-grid" data-toggle="buttons">
-                  <!-- ajax by jquery return the todo_lists here -->
+                <label from="from-label"><hr></label>
+                <div id="labels" class="button-group-vertical d-grid" data-toggle="buttons">
+                  <div id="todo_lists" class="button-group-vertical d-grid" data-toggle="buttons">
+                    <!-- ajax by jquery return the todo_lists here -->
+                  </div>
+                  <label from="from-label"><hr></label>
+                  <input type='radio' name='todo_lists' autocomplete='off' class='btn-check label-list-btn' id="red_list" value="1"><label class='btn btn-outline-danger' for="red_list"><span class="badge bg-danger p-1 border border-light rounded-circle"> </span> Red</label><label class='form-label'></label>
+                  <input type='radio' name='todo_lists' autocomplete='off' class='btn-check label-list-btn' id="blue_list" value="2"><label class='btn btn-outline-primary' for="blue_list"><span class="badge bg-primary p-1 border border-light rounded-circle"> </span> Blue</label><label class='form-label'></label>
+                  <input type='radio' name='todo_lists' autocomplete='off' class='btn-check label-list-btn' id="yellow_list" value="3"><label class='btn btn-outline-warning' for="yellow_list"><span class="badge bg-warning p-1 border border-light rounded-circle"> </span> Yellow</label><label class='form-label'></label>
+                  <input type='radio' name='todo_lists' autocomplete='off' class='btn-check label-list-btn' id="green_list" value="4"><label class='btn btn-outline-success' for="green_list"><span class="badge bg-success p-1 border border-light rounded-circle"> </span> Green</label><label class='form-label'></label>
+                  <input type='radio' name='todo_lists' autocomplete='off' class='btn-check label-list-btn' id="other_list" value="5"><label class='btn btn-outline-secondary' for="other_list"><span class="badge bg-secondary p-1 border border-light rounded-circle"> </span> Other</label><label class='form-label'></label>
+                  <label from="from-label"><hr></label>
                 </div>
                 <li class="nav-item">
                   <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#TodoListModal" id="add_todolist_btn" value="{{ user.id }}">

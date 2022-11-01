@@ -7,7 +7,6 @@ from flask_mail import Mail
 from .blueprints import user_bp, admin_bp, event_bp
 from flask_cors import CORS
 
-
 app = Flask(__name__)
 app.config.from_object('config')
 CORS(app, supports_credentials=True)
