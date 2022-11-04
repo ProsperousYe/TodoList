@@ -16,31 +16,33 @@
       <img src="{{url_for('static', filename='picture/logo.png')}}" width="100%"/>
     </div>
     <div class="container">
-      <form action="{{ url_for('user.login') }}" method="POST">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value="{{ email }}">
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" name="password" value="{{ password }}">
-        </div>
-        <div class="col-12 d-grid">
-          <label class="form-label"></label>
-          <button type="submit" class="btn btn-primary">login</button>
-          <label class="form-label"></label>
-        </div>
-        <div class="row">
-          <label class="form-label"></label>
-          <div class="col-6 d-grid">
-            <button type="button" class="btn btn-outline-secondary" id="register_btn">Register now</button>
+      <div class="card">
+        <form action="{{ url_for('user.login') }}" method="POST">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value="{{ email }}">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
           </div>
-          <div class="col-6 d-grid">
-            <button type="button" class="btn btn-outline-secondary" id="forget_password_btn">Forgot password</button>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password" value="{{ password }}">
           </div>
-        </div>
-      </form>
+          <div class="col-12 d-grid">
+            <label class="form-label"></label>
+            <button type="submit" class="btn btn-primary">login</button>
+            <label class="form-label"></label>
+          </div>
+          <div class="row">
+            <label class="form-label"></label>
+            <div class="col-6 d-grid">
+              <button type="button" class="btn btn-outline-secondary" id="register_btn">Register now</button>
+            </div>
+            <div class="col-6 d-grid">
+              <button type="button" class="btn btn-outline-secondary" id="forget_password_btn">Forgot password</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
     <script src="../static/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
   </body>
