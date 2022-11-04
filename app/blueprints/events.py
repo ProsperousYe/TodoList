@@ -28,9 +28,6 @@ def add_event():
             title = form.event_name.data
             content = form.event_description.data
             setting_date_all = request.values.get("event_finish_date")
-            # setting_date = datetime.strptime(setting_date, '%Y-%m-%d')
-            # setting_date = datetime(setting_date)
-            # print(setting_date, type(setting_date))
             setting_day = setting_date_all.split('-')
             setting_year , setting_month , setting_date = setting_day
             setting_time = request.values.get("event_finish_time")

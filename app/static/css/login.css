@@ -1,0 +1,42 @@
+body{
+    background-image: url(../picture/background.png);
+    background-size:100% 100%;
+    background-attachment:fixed;
+}
+
+@font-face {
+    font-family: BrushScript;
+    src: url(../fonts/Brush\ Script.ttf);
+}
+
+.container{
+    width:fit-content;
+    right: 10%;
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+#logo{
+    font-family: BrushScript;
+    width: 25%;
+    height: auto;
+    left: 10%;
+    top: 40%;
+    position: absolute;
+    transform: translateY(-40%);
+}
+
+#hello{
+    color:lightcoral;
+    text-align: left;
+    font-size: 300%;
+    margin: 0px;
+}
+
+#todo_list{
+    color:lightcoral;
+    text-align: center;
+    font-size: 600%;
+}
+
