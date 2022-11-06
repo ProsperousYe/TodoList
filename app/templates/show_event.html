@@ -1,23 +1,16 @@
 <div class="row">
   <label class="from-label"></label>
 </div>
-{% if list_id != 0 %}
-<div class="contianer">
-  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event_btn" value="{{ list_id }}">
-    + Add Event
-  </button>
-</div>
-{% endif %}
 {% if not events %}
 <h1>Add any event</h1>
 {% endif %}
 <label class="form-label"></label>
 {% for event in events %}
 {% if event.finished == False %}
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 100%;">
   <div class="card-body">
     <div class="row">
-      <div class="col-9">
+      <div class="col-md-10">
         <h5 class="card-title">
           {% if event.label == 1 %}
           <span class="badge bg-danger p-2 border border-light rounded-circle"> </span>
@@ -32,7 +25,7 @@
           {% endif %}
           {{event.title}}</h5>
       </div>
-      <div class="col-3">
+      <div class="col-md-2 pull-right">
         <button class="btn btn-secondary-outline edit-btn" data-bs-toggle="modal" data-bs-target="#editModal_{{event.id}}">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -66,14 +59,30 @@
     <div class="row">
       <label class="form-label"></label>
     </div>
-    <button class="btn btn-primary finished-btn" value="{{event.id}}">Finished</button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#finished_{{event.id}}"  value="{{event.id}}">Finished</button>
+    <!-- Finished Confirm -->
   </div>
 </div>
 <label class="form-label"></label>
+<div class="modal fade" id="finished_{{event.id}}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content edit">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Have you finished the {{event.title}}?</h5>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+    <button type="submit" class="btn btn-primary finished-btn" value="{{event.id}}">YES</button>
+  </div>
+  </div>
+  </div>
+</div>
 {% endif %}
+
+<!-- Edit Event Modal -->
 <div class="modal fade" id="editModal_{{event.id}}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-  <div class="modal-content">
+  <div class="modal-content edit">
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Edit the work {{event.title}}</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -173,7 +182,7 @@
 
 
 
-<!-- Modal -->
+<!-- Add Event Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content">

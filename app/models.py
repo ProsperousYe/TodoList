@@ -51,3 +51,13 @@ class EventModel(db.Model):
     gone_days = db.Column(db.Integer)
     finished = db.Column(db.Boolean, default=False)
     finished_datetime = db.Column(db.DateTime, nullable=True)
+
+class Tasks(db.Model):
+    '''任务表'''
+    __tablename__ = "task"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    task_name = db.Column(db.String(100))
+    finished = db.Column(db.Boolean, default=False)
+

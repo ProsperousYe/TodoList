@@ -29,6 +29,7 @@ function change_password() {
 
 function load_event(){
   $(".todo-list-btn").on("click", function () {
+    console.log("test")
     let id = $(this).attr("id");
     let events = $("#events")
     $.ajax({
@@ -47,6 +48,17 @@ function load_event(){
       }
     })
   });
+}
+
+function load_calendar(){
+  let calendar = $('#calendar')
+  $.ajax({
+    method: 'GET',
+    url: '/event/load_calendar',
+  }).then((res)=>{
+    console.log('calendar')
+    calendar.html(res)
+  })
 }
 
 function load_event_labels(){
@@ -85,9 +97,13 @@ function load_todo_list(){
       for(let i = 0; i<list.length;i++){
         let todo = list[i];
         if(i==0){
-          todo_lists.append("<input type='radio' name='todo_lists' autocomplete='off' class='btn-check todo-list-btn' checked id='"+todo.id+"'><label class='btn btn-outline-dark' for='"+todo.id+"'>"+todo.list_name+"</label><label class='form-label'></label>")
+          let list_id = todo.id
+          let btn = "<div class='add_event_btn' data-bs-toggle='modal' data-bs-target='#exampleModal' id='add_event_btn_"+list_id+"' value='" +  list_id  + "'>+</div>"
+          todo_lists.append("<input type='radio' name='todo_lists' autocomplete='off' class='btn-check todo-list-btn' checked id='"+todo.id+"'><label class='btn btn-outline-dark todo_list-label' for='"+todo.id+"'>"+todo.list_name+"</label>"+btn)
         } else {
-          todo_lists.append("<input type='radio' name='todo_lists' autocomplete='off' class='btn-check todo-list-btn' id='"+todo.id+"'><label class='btn btn-outline-dark' for='"+todo.id+"'>"+todo.list_name+"</label><label class='form-label'></label>")
+          let list_id = todo.id
+          let btn = "<div class='add_event_btn' data-bs-toggle='modal' data-bs-target='#exampleModal' id='add_event_btn_"+list_id+"' value='" +  list_id  + "'>+</div>"
+          todo_lists.append("<input type='radio' name='todo_lists' autocomplete='off' class='btn-check todo-list-btn' id='"+todo.id+"'><label class='btn btn-outline-dark todo_list-label' for='"+todo.id+"'>"+todo.list_name+"</label>"+btn)
         }
       }
       // 自动请求选择的第一个列表里的事件
@@ -109,7 +125,40 @@ function load_todo_list(){
         }
       })
       load_event(); // 注册点击事件
+      show_add_btn();
     }
+  })
+}
+
+function show_add_btn(){
+  $(".todo_list-label").hover(function(){
+    //console.log("hovered");
+    let list_id = $(this).attr("for")
+    //console.log("add_event_btn_"+list_id)
+    // let btn = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#exampleModal' id='add_event_btn' value='" +  list_id  + "'>+</button>"
+    // $(this).parent().append(btn)
+    $("#add_event_btn_"+list_id).css({
+      "visibility":"visible",
+      "opacity":"1",
+    });
+  },function(){
+    let list_id = $(this).attr("for")
+    //console.log("add_event_btn_"+list_id)
+    $("#add_event_btn_"+list_id).css({
+      "visibility":"hidden",
+      "opacity":"0",
+    });
+  });
+  $(".add_event_btn").hover(function(){
+    $(this).css({
+      "visibility":"visible",
+      "opacity":"1",
+    });
+  },function(){
+    $(this).css({
+      "visibility":"hidden",
+      "opacity":"0",
+    });
   })
 }
 
@@ -137,6 +186,7 @@ function finished(){
           })
         }
       })
+      location.reload();
     })
   })
 }
@@ -180,4 +230,6 @@ $(function () {
   load_todo_list();
   load_event_labels();
   right_nav();
+  load_calendar();
+  show_add_btn();
 });

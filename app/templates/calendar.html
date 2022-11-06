@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="{{ url_for('static', filename='jquery/jquery.3.6.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+    </head>
+<body>
+    <div class="cldBody">
+        <table>
+            <thead>
+                <tr>
+                    <td colspan="7">
+                        <div class="top">
+                            <span id="left"><</span>
+                            <span id="topDate"></span>
+                            <span id="right">></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="week" >
+                    <td>Sun</td>
+                    <td>Mon</td>
+                    <td>Tue</td>
+                    <td>Wen</td>
+                    <td>Thr</td>
+                    <td>Fir</td>
+                    <td>Sat</td>
+                </tr>
+            </thead>
+            <tbody id="tbody" ></tbody>
+        </table>
+    </div>
+</body>
+<style type="text/css">
+    .cldBody{background:rgba(255, 255, 255, 0);width: 100%;}
+    table{margin:2% auto 2% auto;}
+    .cldBody .top{height: 60px;line-height: 60px;text-align: center;position: relative;}
+    #topDate{font-size: 24px;}
+    #week td{font-size: 15px;}
+    td{width: 60px; height: 60px;line-height: 60px;text-align: center;font-size: 20px;}
+    #tbody td:hover{background-color: rgba(255, 255, 255, 0.8);cursor: pointer;border-radius: 50%;}
+    .curDate{color: red;font-weight: bold;}
+    #left,#right{width: 60px;height: 60px;position: absolute;cursor: pointer;}
+    #left{left: 5;border-radius: 50%;}
+    #right{right: 5;border-radius: 50%;}
+    #left:hover, #right:hover{background-color: rgba(255, 255, 255, 0.8);}
+</style>
+</html>

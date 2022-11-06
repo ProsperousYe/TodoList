@@ -182,3 +182,7 @@ def edit_event():
             return jsonify(code=400, message = "Invalid user")
     else:
         return jsonify(code=400, message = "please re-login")
+
+@bp.route('/load_calendar', methods=['GET'])
+def calendar():
+    return render_template('calendar.html')

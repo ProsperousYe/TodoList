@@ -15,7 +15,7 @@ body{
 
 nav{
     padding: 10;
-    -webkit-backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(15px);
     border-radius:15px;
     margin: 10;
     transition: all 0.6s;
@@ -29,7 +29,7 @@ nav:hover{
 }
 
 #nav{
-    -webkit-backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(15px);
 }
 
 
@@ -47,10 +47,70 @@ nav:hover{
     margin: 5;
     transition: all 0.6s;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .card:hover{
     transform: scale(1.01);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.modal-content{
+    -webkit-backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.3);
+    border-radius:10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: all 0.6s;
+}
+
+.modal-content:hover{
+    transform: scale(1.01);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+}
+
+.show{
+    background: rgba(255, 255, 255, 0);
+}
+
+.form-control{
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.6s;
+}
+
+.form-control:focus{
+    box-shadow: 0 0 0 0;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.form-check-input{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#search{
+    width: 30%;
+    transition:all 0.6s;
+}
+
+#search:hover{
+    width: 60%;
+}
+
+.add_event_btn{
+    position: relative;;
+    left: 110%;
+    bottom: 460%;
+    height: 0.5rem;
+    width: 10%;
+    font-size: x-large;
+    border-radius: 50%;
+    transition: visibility 0.6s, opacity 0.6s;
+    visibility: hidden;
+    opacity: 0;
+    color:green;
+    cursor:pointer;
+}
+
+.todo_div{
+    width: 120%;
+    left: 0px;
 }
