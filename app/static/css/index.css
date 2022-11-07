@@ -133,3 +133,7 @@ nav:hover{
 #search-input{
     border-color: gray;
 }
+
+.tooltip{
+    background-color: rgba(255, 255, 255, 0.5);
+}
