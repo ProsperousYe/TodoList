@@ -13,9 +13,6 @@ class UserModel(db.Model):
     state = db.Column(db.Boolean, default=False)
     todo_list = db.relationship('TodoListModel', backref='user', uselist=True)
 
-    # def __repr__(self) -> str:
-    #     return '<User % r>' % (self.id, self.username, self.admin)
-
 class EmailCaptchaModel(db.Model):
     __tablename__ = "email_captcha"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

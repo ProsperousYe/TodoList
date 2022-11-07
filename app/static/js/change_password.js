@@ -42,7 +42,21 @@ function bindCaptchaClick() {
   });
 }
 
+function load_nav(){
+  let id = $("#navbar").attr("value")
+  $.ajax({
+    method: "GET",
+    url: "/nav",
+    data:{
+      id: id,
+    }
+  }).then((res) => {
+    $("#navbar").html(res)
+  })
+}
+
 // 等网页加载完成后再执行
 $(function () {
   bindCaptchaClick();
+  load_nav();
 });

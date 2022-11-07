@@ -112,10 +112,6 @@ def load_todolist():
     user = UserModel.query.filter(id == id).first()
     print(id)
     todoLists = TodoListModel.query.filter(TodoListModel.user_id==id).all()
-    # if len(todoLists) > 0:
-    #     return redirect(url_for("index", username=user.username, id=user.id, todoLists=todoLists))
-    # else:
-    #     return redirect(url_for("index", username=user.username, id=user.id))
     lists = []
     for todoList in todoLists:
         lists.append({

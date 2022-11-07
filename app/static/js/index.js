@@ -1,32 +1,3 @@
-function log_out() {
-  $("#logout_btn").on("click", function () {
-    let id = $(this).attr("value");
-    $.ajax({
-      url: "/user/logout",
-      method: "POST",
-      data: {
-        id: id,
-      },
-      success: function (res) {
-        let code = res["code"];
-        if (code == 200) {
-          alert("登出成功");
-          window.location.href = "/user/login";
-        } else {
-          console.log(code);
-          alert(code);
-        }
-      },
-    });
-  });
-}
-
-function change_password() {
-  $("#change_password_btn").on("click", function () {
-    window.location.href = "/user/change_password";
-  });
-}
-
 function load_event(){
   $(".todo-list-btn").on("click", function () {
     console.log("test")
@@ -224,12 +195,24 @@ function right_nav(){
   })
 }
 
+function load_nav(){
+  let id = $("#navbar").attr("value")
+  $.ajax({
+    method: "GET",
+    url: "/nav",
+    data:{
+      id: id,
+    }
+  }).then((res) => {
+    $("#navbar").html(res)
+  })
+}
+
 $(function () {
-  log_out();
-  change_password();
   load_todo_list();
   load_event_labels();
   right_nav();
   load_calendar();
   show_add_btn();
+  load_nav();
 });

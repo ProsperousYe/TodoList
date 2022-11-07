@@ -58,3 +58,17 @@ def forget_password():
 @app.route("/", methods=["GET", "POST"])
 def default():
     return redirect(url_for("user.login"))
+
+@app.route("/nav", methods=["GET"])
+def nav():
+    print("get nav")
+    id = request.values.get("id")
+    user = UserModel.query.filter(UserModel.id==id).first()
+    return render_template('nav.html', user=user)
+
+@app.route("/home", methods=["GET"])
+def home():
+    id = session.get("id")
+    user = UserModel.query.filter(UserModel.id==id).first()
+    print(url_for('index', username=user.username, id=id))
+    return url_for('index', username=user.username, id=id)
