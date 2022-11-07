@@ -182,3 +182,24 @@ def edit_event():
 @bp.route('/load_calendar', methods=['GET'])
 def calendar():
     return render_template('calendar.html')
+
+@bp.route('/duedates', methods=['POST'])
+def duedates():
+    id = session.get('id')
+    year = request.values.get("year")
+    month = request.values.get("month")
+    print(year, month)
+    all_event = EventModel.query.filter(EventModel.user_id ==id)
+    year_event = all_event.filter(EventModel.setting_year == year)
+    event_month = year_event.filter(EventModel.setting_month==month).all()
+    events = []
+    dates = []
+    for event in event_month:
+        events.append({
+            "id": event.id,
+        })
+    for event in event_month:
+        dates.append({
+            "date": event.setting_date,
+        })
+    return jsonify(code=200, message = {"events":events,"dates":dates})
