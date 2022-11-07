@@ -174,26 +174,7 @@ function progress() {
   })
 }
 
-function right_nav(){
-  $("#hello").on("click", function(){
-    let nav = $("#nav_vertical")
-    if(nav.val()==1){
-      nav.val(0)
-      nav.css({
-        "position": "relative",
-        "left": "-500px",
-        "transition-duration":"1s"
-      })
-    } else {
-      nav.val(1)
-      nav.css({
-        "position": "relative",
-        "left": "0px",
-        "transition-duration":"1s"
-      })
-    }
-  })
-}
+
 
 function load_nav(){
   let id = $("#navbar").attr("value")
@@ -211,7 +192,6 @@ function load_nav(){
 $(function () {
   load_todo_list();
   load_event_labels();
-  right_nav();
   load_calendar();
   show_add_btn();
   load_nav();

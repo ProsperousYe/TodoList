@@ -55,6 +55,13 @@ function load_nav(){
   })
 }
 
+function back_home(){
+  $.ajax({
+    method: "GET",
+    url: "/home",
+  })
+}
+
 // 等网页加载完成后再执行
 $(function () {
   bindCaptchaClick();

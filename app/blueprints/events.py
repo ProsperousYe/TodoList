@@ -67,7 +67,7 @@ def load_event():
     user = UserModel.query.filter(UserModel.id==user_id).first()
     list_id = request.values.get("list_id")
     # print("list id:",list_id)
-    events = EventModel.query.filter(EventModel.todo_list_id==list_id).all()
+    events = EventModel.query.filter(EventModel.todo_list_id==list_id).order_by("duration").all()
     for event in events:
         event.gone_days = (datetime.now()-event.create_datetime).days
     db.session.commit()
