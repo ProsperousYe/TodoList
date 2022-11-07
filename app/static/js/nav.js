@@ -52,7 +52,7 @@ function right_nav(){
         "transition-duration":"1s"
       })
       right.css({
-        "position": "relative",
+        "position": "fixed",
         "right": "-500px",
         "transition-duration":"0.6s"
       })
