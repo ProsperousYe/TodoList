@@ -42,7 +42,7 @@ function load_duedates(year, month){
 function showcld(){
     //console.log(month, year)
     load_duedates(year, month);
-    console.log(duedates);
+    //console.log(duedates);
     var monthDay = [31,28,31,30,31,30,31,31,30,31,30,31];  // 创建数组存放每个月有多少天 ,默认2月为28天
     // 判断闰年
     if(year % 4 == 0 && year %100 != 0 || year % 400 == 0){

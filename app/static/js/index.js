@@ -55,6 +55,7 @@ function load_event_labels(){
 }
 
 function load_todo_list(){
+  let body = $("body")
   let todo_lists = $("#todo_lists")
   $.ajax({
     method: 'GET',
@@ -70,11 +71,17 @@ function load_todo_list(){
         if(i==0){
           let list_id = todo.id
           let btn = "<div class='add_event_btn' data-bs-toggle='modal' data-bs-target='#exampleModal' id='add_event_btn_"+list_id+"' value='" +  list_id  + "'>+</div>"
-          todo_lists.append("<input type='radio' name='todo_lists' autocomplete='off' class='btn-check todo-list-btn' checked id='"+todo.id+"'><label class='btn btn-outline-dark todo_list-label' for='"+todo.id+"'>"+todo.list_name+"</label>"+btn)
+          let btn_del = "<div class='del_event_btn' data-bs-toggle='modal' data-bs-target='#del_"+todo.id+"' id='del_todo_list_btn_"+list_id+"' value='" +  list_id  + "'>-</div>"
+          let model = "<div class='modal fade' id='del_"+todo.id+"' tabindex='-1' aria-labelledby='delModalLabel' aria-hidden='rue'><div class='modal-dialog modal-dialog-centered'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='exampleModalLabel'>Are you sure to delete the "+todo.list_name+" ?</h5></div><div class='modal-footer'><button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>NO</button><button type='submit' class='btn btn-primary del-list-btn' value='"+todo.id+"'>YES</button></div></div></div></div>"
+          todo_lists.append("<input type='radio' name='todo_lists' autocomplete='off' class='btn-check todo-list-btn' checked id='"+todo.id+"'><label class='btn btn-outline-dark todo_list-label' for='"+todo.id+"'>"+todo.list_name+"</label>"+btn+btn_del)
+          body.append(model)
         } else {
           let list_id = todo.id
           let btn = "<div class='add_event_btn' data-bs-toggle='modal' data-bs-target='#exampleModal' id='add_event_btn_"+list_id+"' value='" +  list_id  + "'>+</div>"
-          todo_lists.append("<input type='radio' name='todo_lists' autocomplete='off' class='btn-check todo-list-btn' id='"+todo.id+"'><label class='btn btn-outline-dark todo_list-label' for='"+todo.id+"'>"+todo.list_name+"</label>"+btn)
+          let btn_del = "<div class='del_event_btn' data-bs-toggle='modal' data-bs-target='#del_"+todo.id+"' id='del_todo_list_btn_"+list_id+"' value='" +  list_id  + "'>-</div>"
+          let model = "<div class='modal fade' id='del_"+todo.id+"' tabindex='-1' aria-labelledby='delModalLabel' aria-hidden='rue'><div class='modal-dialog modal-dialog-centered'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='exampleModalLabel'>Are you sure to delete the "+todo.list_name+" ?</h5></div><div class='modal-footer'><button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>NO</button><button type='submit' class='btn btn-primary del-list-btn' value='"+todo.id+"'>YES</button></div></div></div></div>"
+          todo_lists.append("<input type='radio' name='todo_lists' autocomplete='off' class='btn-check todo-list-btn' id='"+todo.id+"'><label class='btn btn-outline-dark todo_list-label' for='"+todo.id+"'>"+todo.list_name+"</label>"+btn+btn_del)
+          body.append(model)
         }
       }
       // 自动请求选择的第一个列表里的事件
@@ -97,7 +104,23 @@ function load_todo_list(){
       })
       load_event(); // 注册点击事件
       show_add_btn();
+      del_todo_btn()
     }
+  })
+}
+
+function del_todo_btn(){
+  $(".del-list-btn").on("click",function(){
+    let id = $(this).val()
+    $.ajax({
+      method:'post',
+      url: '/event/del_list',
+      data: {
+        id: id
+      }
+    }).then((res) => {
+      location.reload()
+    })
   })
 }
 
@@ -112,6 +135,10 @@ function show_add_btn(){
       "visibility":"visible",
       "opacity":"1",
     });
+    $("#del_todo_list_btn_"+list_id).css({
+      "visibility":"visible",
+      "opacity":"1",
+    });
   },function(){
     let list_id = $(this).attr("for")
     //console.log("add_event_btn_"+list_id)
@@ -119,8 +146,23 @@ function show_add_btn(){
       "visibility":"hidden",
       "opacity":"0",
     });
+    $("#del_todo_list_btn_"+list_id).css({
+      "visibility":"hidden",
+      "opacity":"0",
+    });
   });
   $(".add_event_btn").hover(function(){
+    $(this).css({
+      "visibility":"visible",
+      "opacity":"1",
+    });
+  },function(){
+    $(this).css({
+      "visibility":"hidden",
+      "opacity":"0",
+    });
+  })
+  $(".del_event_btn").hover(function(){
     $(this).css({
       "visibility":"visible",
       "opacity":"1",

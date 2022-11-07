@@ -203,3 +203,16 @@ def duedates():
             "date": event.setting_date,
         })
     return jsonify(code=200, message = {"events":events,"dates":dates})
+
+@bp.route('/del_list', methods=['POST'])
+def del_list():
+    user_id = session.get('id')
+    id = request.values.get("id")
+    todo_list = TodoListModel.query.filter(TodoListModel.user_id==user_id,TodoListModel.id==id).first()
+    db.session.delete(todo_list)
+    try:
+        db.session.commit()
+        return jsonify({'code':200, 'message' :"Delete TodoList Successfully!"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code':400, 'message' :str(e)})
