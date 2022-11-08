@@ -10,6 +10,8 @@ function redirect_change_password() {
   });
 }
 
+
+
 $(function () {
   redirect_change_password();
   redirect_register();

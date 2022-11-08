@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ECharts</title>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="../static/echart/echarts.js"></script>
+  </head>
+  <body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="main" style="width:100%;height: 500px;"></div>
+    <script type="text/javascript">
+      var myChart = echarts.init(document.getElementById('main'));
+      window.onresize = function() {
+        myChart.resize();
+      };
+      var com_num = 0;
+      var todo_num = 0;
+      function load_num(){
+        $.ajax({
+          method:"POST",
+          async:false,
+          url:"/event/get_counts",
+          dataType:"json",
+          success:function(res){
+            // com_num = 0;
+            // let todo_nu = 0;
+            com_num = res.message.com_num
+            todo_num = res.message.todo_num
+            console.log(com_num, todo_num);
+          }
+        })
+      }
+      load_num();
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main'));
+      // 指定图表的配置项和数据
+      var option = {
+        title: {
+          text: 'Todo vs Completed',
+          left: 'center',
+          top: 'center'
+        },
+        series: [
+          {
+            type: 'pie',
+            data: [
+              {
+                value: com_num,
+                name: 'completed'
+              },
+              {
+                value: todo_num,
+                name: 'todo'
+              },
+            ],
+            radius: ['40%', '70%']
+          }
+        ],
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+  </body>
+</html>

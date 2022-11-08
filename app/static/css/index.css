@@ -138,3 +138,32 @@ nav:hover{
     height:calc(90vh);
     overflow-y: auto;
 }
+
+.nav{
+    border: 0;
+}
+
+.calendar-btn{
+    color:black;
+    width:150px;
+    margin-top: 0;
+    border: 0;
+    border-radius:10px;
+    background-color:rgba(255, 255, 255, 0.5);
+}
+
+#calendar{
+    /* height:calc(80vh); */
+    transition: all 0.6s;
+}
+
+.calendar-btn.active{
+    background-color:rgba(255, 255, 255, 0.8);
+    border: 0;
+}
+
+.calendar-btn:hover{
+    color:black;
+    background-color:rgba(255, 255, 255, 0.8);
+    border: 0;
+}

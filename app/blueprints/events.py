@@ -254,3 +254,17 @@ def del_list():
     except Exception as e:
         db.session.rollback()
         return jsonify({'code':400, 'message' :str(e)})
+
+@bp.route('/get_counts', methods=['POST'])
+def get_counts():
+    com_num = 0
+    todo_num = 0
+    id = session.get('id')
+    u_events = EventModel.query.filter(EventModel.user_id==id).all()
+    for event in u_events:
+        if event.finished:
+            com_num += 1
+        else:
+            todo_num += 1
+    print(com_num, todo_num)
+    return jsonify({'code':200, 'message' :{'com_num':com_num, 'todo_num':todo_num}})

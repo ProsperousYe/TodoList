@@ -22,6 +22,8 @@ function load_event(){
   });
 }
 
+
+
 function load_calendar(){
   let calendar = $('#calendar')
   $.ajax({
@@ -29,6 +31,16 @@ function load_calendar(){
     url: '/event/load_calendar',
   }).then((res)=>{
     console.log('calendar')
+    calendar.html(res)
+  })
+}
+
+function load_echarts(){
+  let calendar = $('#calendar')
+  $.ajax({
+    method: 'GET',
+    url: '/echart',
+  }).then((res) =>{
     calendar.html(res)
   })
 }
@@ -282,6 +294,19 @@ function completed(){
   })
 }
 
+function calendar_change_(){
+  $("#calendar_nav").on("click", function(){
+    load_calendar();
+    $(this).addClass("active")
+    $("#statis_nav").removeClass("active")
+  });
+  $("#statis_nav").on("click", function(){
+    load_echarts();
+    $(this).addClass("active")
+    $("#calendar_nav").removeClass("active")
+  })
+}
+
 
 $(function () {
   load_todo_list();
@@ -290,4 +315,5 @@ $(function () {
   show_add_btn();
   load_nav();
   completed();
+  calendar_change_();
 });

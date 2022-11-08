@@ -71,4 +71,8 @@ def home():
     id = session.get("id")
     user = UserModel.query.filter(UserModel.id==id).first()
     print(url_for('index', username=user.username, id=id))
-    return url_for('index', username=user.username, id=id) 
+    return url_for('index', username=user.username, id=id)
+
+@app.route("/echart", methods=["GET"])
+def echart():
+    return render_template('echarts.html')
