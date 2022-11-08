@@ -67,22 +67,48 @@ def load_event():
     user = UserModel.query.filter(UserModel.id==user_id).first()
     list_id = request.values.get("list_id")
     # print("list id:",list_id)
-    events = EventModel.query.filter(EventModel.todo_list_id==list_id).order_by("duration").all()
+    com = '0'
+    events = EventModel.query.filter(EventModel.todo_list_id==list_id and EventModel.finished==com).order_by("duration").all()
     for event in events:
         event.gone_days = (datetime.now()-event.create_datetime).days
-    db.session.commit()
-    return jsonify(code=200, message=render_template('show_event.html',user=user, events=events, list_id=list_id))
+    try:
+        db.session.commit()
+        return jsonify({'code':200, 'message':render_template('show_event.html',user=user, events=events, list_id = 0, com = com)})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code':400, 'message' :str(e)})
 
 @bp.route('/load_event_label', methods=['POST'])
 def load_event_label():
     user_id = session.get('id')
     user = UserModel.query.filter(UserModel.id==user_id).first()
     label = request.values.get("label")
-    events = EventModel.query.filter(EventModel.label==label and EventModel.user_id==user_id)
+    com = '0'
+    events = EventModel.query.filter(EventModel.label==label and EventModel.user_id==user_id and EventModel.finished==com)
     for event in events:
         event.gone_days = (datetime.now()-event.create_datetime).days
-    db.session.commit()
-    return jsonify(code=200, message=render_template('show_event.html',user=user, events=events, list_id = 0))
+    try:
+        db.session.commit()
+        return jsonify({'code':200, 'message':render_template('show_event.html',user=user, events=events, list_id = 0, com = com)})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code':400, 'message' :str(e)})
+
+@bp.route('/completed', methods=['POST'])
+def completed():
+    user_id = session.get('id')
+    user = UserModel.query.filter(UserModel.id==user_id).first()
+    com = request.values.get('com')
+    user_e = EventModel.query.filter(EventModel.user_id==user.id)
+    events = user_e.filter(EventModel.finished==com)
+    for event in events:
+        event.gone_days = (datetime.now()-event.create_datetime).days
+    try:
+        db.session.commit()
+        return jsonify({'code':200, 'message':render_template('show_event.html',user=user, events=events, list_id = 0, com = com)})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code':400, 'message' :str(e)})
 
 @bp.route('/add_todolist', methods=['POST', 'GET'])
 def add_todolist():
@@ -131,6 +157,18 @@ def finished_event():
         return jsonify({"code": 200, "message": "Event finished!", "list_id":list_id})
     else:
         return jsonify({"code": 400, "message": "Invalid event id!"})
+
+@bp.route('/delete_event', methods=['POST'])
+def delete_event():
+    id = request.values.get('id')
+    event = EventModel.query.filter(EventModel.id== id).first()
+    db.session.delete(event)
+    try:
+        db.session.commit()
+        return jsonify({'code':200, 'message' :"Delete the event successfully!"})
+    except Exception as e:
+        db.session.rollbacks()
+        return jsonify({'code': 400, 'message': str(e)})
 
 @bp.route('/edit_event', methods=['POST'])
 def edit_event():

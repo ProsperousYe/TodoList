@@ -15,6 +15,7 @@ function load_event(){
         // console.log(res)
         events.html(res.message)
         finished();
+        delete_event();
         progress();
       }
     })
@@ -48,6 +49,7 @@ function load_event_labels(){
         // console.log(res)
         events.html(res.message)
         finished();
+        delete_event();
         progress();
       }
     })
@@ -204,6 +206,34 @@ function finished(){
   })
 }
 
+function delete_event(){
+  $(".delete-event-btn").on("click", function(){
+    let id = $(this).attr("value")
+    // console.log(id)
+    $.ajax({
+      method:"POST",
+      datatype:"json",
+      url:"/event/delete_event",
+      data:{
+        id : id,
+      }
+    }).then((res)=>{
+      $('#todo_lists').children('input').each(function(){
+        if($(this).attr('checked')){
+          $(this).trigger('click');
+        } else {
+          $('#labels').children('input').each(function () {
+            if($(this).attr('checked')){
+              $(this).trigger('click');
+            }
+          })
+        }
+      })
+      location.reload();
+    })
+  })
+}
+
 function progress() {
   $(".event-progress").each(function(){
     console.log(13)
@@ -215,8 +245,6 @@ function progress() {
     $(this).css({'width': width_percent+'%'})
   })
 }
-
-
 
 function load_nav(){
   let id = $("#navbar").attr("value")
@@ -231,10 +259,35 @@ function load_nav(){
   })
 }
 
+function completed(){
+  $(".com-list-btn").on("click", function(){
+    let com = $(this).val();
+    let events = $("#events")
+    $.ajax({
+      method: "post",
+      url: "/event/completed",
+      dataType: "json",
+      data:{
+        com: com,
+      }
+    }).then((res)=>{
+      if(res.code==200){
+        // console.log(res)
+        events.html(res.message)
+        finished();
+        delete_event();
+        progress();
+      }
+    })
+  })
+}
+
+
 $(function () {
   load_todo_list();
   load_event_labels();
   load_calendar();
   show_add_btn();
   load_nav();
+  completed();
 });

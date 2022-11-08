@@ -29,7 +29,6 @@ class TodoListModel(db.Model):
     limit = db.Column(db.Integer)
     events = db.relationship('EventModel', backref='todo_list', uselist=True)
 
-
 class EventModel(db.Model):
     '''事项表'''
     __tablename__ = "event"
