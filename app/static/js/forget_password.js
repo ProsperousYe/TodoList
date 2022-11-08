@@ -1,7 +1,9 @@
+//添加绑定验证码按钮的事件
 function bindCaptchaClick() {
   $("#captcha-btn").on("click", function () {
     let $this = $(this);
-    let email = $("input[name='email']").val();
+    let email = $("#email").val();
+    //console.log($("#email"))
     if (!email) {
       alert("请输入邮箱！");
     } else {

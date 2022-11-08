@@ -84,7 +84,8 @@ def load_event_label():
     user = UserModel.query.filter(UserModel.id==user_id).first()
     label = request.values.get("label")
     com = '0'
-    events = EventModel.query.filter(EventModel.label==label and EventModel.user_id==user_id and EventModel.finished==com)
+    u_events = EventModel.query.filter(EventModel.user_id==user_id)
+    events = u_events.filter(EventModel.label==label, EventModel.finished==com).all()
     for event in events:
         event.gone_days = (datetime.now()-event.create_datetime).days
     try:

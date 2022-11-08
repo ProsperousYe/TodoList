@@ -73,3 +73,9 @@ form{
 #search:hover{
     width: 60%;
 }
+
+#back{
+    margin:10px;
+    border-radius: 50%;
+    width: 7%;
+}

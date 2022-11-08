@@ -21,6 +21,7 @@ function bindCaptchaClick() {
           if (code === 200) {
             alert("验证码发送成功！");
             $this.off("click");
+            $this.addClass("disabled");
             let countDown = 60;
             let timer = setInterval(function () {
               countDown--;
@@ -30,6 +31,7 @@ function bindCaptchaClick() {
               } else {
                 //clearInterval(timer);
                 $this.text("点击发送验证码");
+                $this.removeClass("disabled")
                 bindCaptchaClick();
                 clearInterval(timer); //  清除计时器
               }
