@@ -133,3 +133,8 @@ nav:hover{
 #search-input{
     border-color: gray;
 }
+
+#events{
+    height:calc(90vh);
+    overflow-y: auto;
+}
