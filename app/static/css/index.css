@@ -32,6 +32,11 @@ nav:hover{
     -webkit-backdrop-filter: blur(15px);
 }
 
+#nav_vertical{
+    height: calc(80hv);
+    overflow: auto;
+}
+
 
 #hello{
     font-size: 200%;

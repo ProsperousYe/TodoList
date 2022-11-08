@@ -1,3 +1,4 @@
+//绑定注册验证码按钮
 function bindCaptchaClick() {
   $("#captcha-btn").on("click", function () {
     let $this = $(this);
@@ -42,6 +43,7 @@ function bindCaptchaClick() {
   });
 }
 
+//加载导航栏，这里使用了template
 function load_nav(){
   let id = $("#navbar").attr("value")
   $.ajax({
@@ -55,6 +57,7 @@ function load_nav(){
   })
 }
 
+//添加返回主页面的按钮事件
 function back_home(){
   $.ajax({
     method: "GET",

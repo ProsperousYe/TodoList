@@ -1,3 +1,4 @@
+//加载普通列表下的事件
 function load_event(){
   $(".todo-list-btn").on("click", function () {
     console.log("test")
@@ -22,8 +23,7 @@ function load_event(){
   });
 }
 
-
-
+//加载日历
 function load_calendar(){
   let calendar = $('#calendar')
   $.ajax({
@@ -35,6 +35,7 @@ function load_calendar(){
   })
 }
 
+//加载组建中的统计图表
 function load_echarts(){
   let calendar = $('#calendar')
   $.ajax({
@@ -45,6 +46,7 @@ function load_echarts(){
   })
 }
 
+//加载固定标签分类下的事件
 function load_event_labels(){
   $(".label-list-btn").on("click", function () {
     let label = $(this).attr("value");
@@ -68,6 +70,7 @@ function load_event_labels(){
   });
 }
 
+//加载todo_list
 function load_todo_list(){
   let body = $("body")
   let todo_lists = $("#todo_lists")
@@ -123,6 +126,7 @@ function load_todo_list(){
   })
 }
 
+//删除list的事件
 function del_todo_btn(){
   $(".del-list-btn").on("click",function(){
     let id = $(this).val()
@@ -138,6 +142,7 @@ function del_todo_btn(){
   })
 }
 
+//list按钮左右浮现删除和添加的按钮事件
 function show_add_btn(){
   $(".todo_list-label").hover(function(){
     //console.log("hovered");
@@ -189,6 +194,7 @@ function show_add_btn(){
   })
 }
 
+//标记事件完成
 function finished(){
   $(".finished-btn").on('click',function(){
     let id = $(this).attr("value")
@@ -218,6 +224,7 @@ function finished(){
   })
 }
 
+//删除事件
 function delete_event(){
   $(".delete-event-btn").on("click", function(){
     let id = $(this).attr("value")
@@ -246,6 +253,7 @@ function delete_event(){
   })
 }
 
+//加载进度条
 function progress() {
   $(".event-progress").each(function(){
     console.log(13)
@@ -258,6 +266,7 @@ function progress() {
   })
 }
 
+//加载导航栏，template！
 function load_nav(){
   let id = $("#navbar").attr("value")
   $.ajax({
@@ -271,6 +280,7 @@ function load_nav(){
   })
 }
 
+//事件完成
 function completed(){
   $(".com-list-btn").on("click", function(){
     let com = $(this).val();
@@ -294,6 +304,7 @@ function completed(){
   })
 }
 
+//cld组件切换的逻辑
 function calendar_change_(){
   $("#calendar_nav").on("click", function(){
     load_calendar();
@@ -307,7 +318,7 @@ function calendar_change_(){
   })
 }
 
-
+//页面加载完成后挂载
 $(function () {
   load_todo_list();
   load_event_labels();

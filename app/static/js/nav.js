@@ -1,3 +1,4 @@
+//登出
 function log_out() {
   $("#logout_btn").on("click", function () {
     let id = $(this).attr("value");
@@ -21,12 +22,14 @@ function log_out() {
   });
 }
 
+//进入修改密码的页面
 function change_password() {
   $("#change_password_btn").on("click", function () {
     window.location.href = "/user/change_password";
   });
 }
 
+//返回主页面
 function back_home() {
   $("#home-btn").on("click", function () {
     console.log("home");
@@ -39,6 +42,7 @@ function back_home() {
   });
 }
 
+//点击后开启聚焦模式
 function right_nav(){
   $("#hello").on("click", function(){
     let nav = $("#nav_vertical")
@@ -73,6 +77,7 @@ function right_nav(){
   })
 }
 
+//页面加载完成后挂载事件
 $(function () {
   log_out();
   change_password();

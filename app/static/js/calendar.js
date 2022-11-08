@@ -9,6 +9,7 @@ var duedates = new Array();
 var events = new Array();
 $('#topDate').text(todateHtml)
 
+//加载有due的日期
 function load_duedates(year, month){
     $.ajax({
         method: "POST",
@@ -39,6 +40,7 @@ function load_duedates(year, month){
     })
 }
 
+//展示cld
 function showcld(){
     //console.log(month, year)
     load_duedates(year, month);
@@ -112,6 +114,7 @@ $('#right').click(function(){
     add_due();
 })
 
+//添加小红点在日期下
 function add_due(){
     $(".dates").children().each(function(){
         if($(this).hasClass("hasDue")){

@@ -1,3 +1,4 @@
+//发送验证码
 function bindCaptchaClick() {
   $("#captcha-btn").on("click", function () {
     let $this = $(this);
