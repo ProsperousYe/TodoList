@@ -67,8 +67,108 @@ function back_home(){
   })
 }
 
+//加载事件
+function load_event(){
+  $("#search-btn").on("click", function () {
+    let events = $("#events")
+    console.log($("textarea[name='event_description']").val())
+    $.ajax({
+      method: 'POST',
+      dataType: 'json',
+      url: '/event/search',
+      data:{
+        event_name: $("input[name='event_name']").val(),
+        event_description: $("textarea[name='event_description']").val(),
+        event_url: $("textarea[name='event_url']").val(),
+        event_finish_date: $("input[name='event_finish_date']").val(),
+        event_finish_time: $("input[name='event_finish_time']").val(),
+      }
+    }).then((res) =>{
+      if(res.code==200){
+        events.html(res.message)
+        finished();
+        delete_event();
+        progress();
+      }
+    })
+  });
+}
+
+//标记事件完成
+function finished(){
+  $(".finished-btn").on('click',function(){
+    let id = $(this).attr("value")
+    // console.log(id)
+    $.ajax({
+      method:"POST",
+      datatype:"json",
+      url:"/event/finished_event",
+      data:{
+        id : id,
+      }
+    }).then((res)=>{
+    console.log($('#todo_lists').children('input'))
+      $('#todo_lists').children('input').each(function(){
+        if($(this).attr('checked')){
+          $(this).trigger('click');
+        } else {
+          $('#labels').children('input').each(function () {
+            if($(this).attr('checked')){
+              $(this).trigger('click');
+            }
+          })
+        }
+      })
+      location.reload();
+    })
+  })
+}
+
+//删除事件
+function delete_event(){
+  $(".delete-event-btn").on("click", function(){
+    let id = $(this).attr("value")
+    // console.log(id)
+    $.ajax({
+      method:"POST",
+      datatype:"json",
+      url:"/event/delete_event",
+      data:{
+        id : id,
+      }
+    }).then((res)=>{
+      $('#todo_lists').children('input').each(function(){
+        if($(this).attr('checked')){
+          $(this).trigger('click');
+        } else {
+          $('#labels').children('input').each(function () {
+            if($(this).attr('checked')){
+              $(this).trigger('click');
+            }
+          })
+        }
+      })
+      location.reload();
+    })
+  })
+}
+
+//加载进度条
+function progress() {
+  $(".event-progress").each(function(){
+    console.log(13)
+    let gone_days = $(this).attr('aria-valuenow')
+    let duration = $(this).attr('aria-valuemax')
+    let width = (duration-gone_days)/duration
+    let width_percent = width * 100
+    console.log(width_percent)
+    $(this).css({'width': width_percent+'%'})
+  })
+}
+
 // 等网页加载完成后再执行
 $(function () {
   bindCaptchaClick();
   load_nav();
+  load_event();
 });

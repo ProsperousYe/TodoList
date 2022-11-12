@@ -200,7 +200,6 @@ def edit_event():
                 print(setting_hour+":"+setting_min)
                 setting_time = datetime.strptime(setting_hour+":"+setting_min, "%H:%M").time()
                 label = request.values.get("label")
-
                 duration = (datetime.strptime(setting_date_all, "%Y-%m-%d")-datetime.now()).days + 1
                 event.update(
                     {
@@ -261,6 +260,43 @@ def del_list():
     except Exception as e:
         db.session.rollback()
         return jsonify({'code':400, 'message' :str(e)})
+
+@bp.route('/search', methods=['GET','POST'])
+def search():
+    if request.method == 'GET':
+        id = session.get('id')
+        user = UserModel.query.filter_by(id=id).first()
+        return render_template("search.html", user=user)
+    else:
+        user_id = session.get('id')
+        if user_id:
+            user = UserModel.query.filter(UserModel.id == user_id).first()
+            if user:
+                u_events = EventModel.query.filter(EventModel.user_id == user_id)
+                form = EventForm(request.form)
+                if form:
+                    title = form.event_name.data
+                    content = form.event_description.data
+                    setting_date_all = request.values.get("event_finish_date")
+                    setting_day = setting_date_all.split('-')
+                    setting_year , setting_month , setting_date = setting_day
+                    setting_time = request.values.get("event_finish_time")
+                    setting_time = setting_time.split(":")
+                    setting_hour = setting_time[0]
+                    setting_min = setting_time[1]
+                    setting_time = datetime.strptime(setting_hour+":"+setting_min, "%H:%M").time()
+                    t_e = u_events.filter(EventModel.title==title)
+                    d_e = t_e.filter(EventModel.setting_date==setting_date)
+                    m_e = d_e.filter(EventModel.setting_month==setting_month)
+                    y_e = m_e.filter(EventModel.setting_year==setting_year)
+                    time_e = y_e.filter(EventModel.setting_time==setting_time)
+                    print(time_e.all())
+                    events =  time_e.filter(EventModel.content==content).all()
+                    print(content)
+                    print(events)
+                    return jsonify({'code':200, 'message':render_template('show_event.html',user=user, events=events, list_id=0, com = '0')})
+
+
 
 @bp.route('/get_counts', methods=['POST'])
 def get_counts():

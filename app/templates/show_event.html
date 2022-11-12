@@ -2,7 +2,7 @@
   <label class="from-label"></label>
 </div>
 {% if not events %}
-<h1>Add any event</h1>
+<h1>No event</h1>
 {% endif %}
 <label class="form-label"></label>
 {% for event in events %}
@@ -11,7 +11,7 @@
     <div class="card" style="width: 100%;">
       <div class="card-body">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <h5 class="card-title">
               {% if event.label == 1 %}
               <span class="badge bg-danger p-2 border border-light rounded-circle"> </span>
@@ -26,7 +26,7 @@
               {% endif %}
               {{event.title}}</h5>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-5">
             <h5 class="card-title">Due:{{event.setting_date}} / {{event.setting_month}}</h5>
           </div>
           <div class="col-md-1 pull-right">

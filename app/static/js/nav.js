@@ -42,6 +42,13 @@ function back_home() {
   });
 }
 
+//进入高级搜索
+function search(){
+  $("#search-btn").on("click", function () {
+    window.location.href = "/event/search";
+  });
+}
+
 //点击后开启聚焦模式
 function right_nav(){
   $("#hello").on("click", function(){
@@ -83,4 +90,5 @@ $(function () {
   change_password();
   back_home();
   right_nav();
+  search();
 })

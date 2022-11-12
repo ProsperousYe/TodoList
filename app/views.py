@@ -73,6 +73,12 @@ def home():
     print(url_for('index', username=user.username, id=id))
     return url_for('index', username=user.username, id=id)
 
+@app.route("/search", methods=["GET"])
+def search():
+    id = session.get("id")
+    user = UserModel.query.filter(UserModel.id==id).first()
+    return url_for('search', username=user.username, id=id)
+
 @app.route("/echart", methods=["GET"])
 def echart():
     return render_template('echarts.html')
