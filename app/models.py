@@ -47,6 +47,7 @@ class EventModel(db.Model):
     gone_days = db.Column(db.Integer)
     finished = db.Column(db.Boolean, default=False)
     finished_datetime = db.Column(db.DateTime, nullable=True)
+    url = db.Column(db.String(500))
 
 class Tasks(db.Model):
     '''任务表'''

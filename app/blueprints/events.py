@@ -31,6 +31,11 @@ def add_event():
             setting_day = setting_date_all.split('-')
             setting_year , setting_month , setting_date = setting_day
             setting_time = request.values.get("event_finish_time")
+            url = request.values.get("event_url")
+            if len(url)<7:
+                print("url:", url)
+                url = url_for("index", username=user.username, id=user.id)
+            print("url")
             # print(setting_year, setting_month, setting_date)
             label = request.values.get("label")
             # print(setting_time, type(setting_time))
@@ -51,7 +56,8 @@ def add_event():
                     todo_list_id=id,
                     label=label,
                     create_datetime=datetime.now(),
-                    duration = duration
+                    duration = duration,
+                    url = url
                 )
                 db.session.add(event)
                 db.session.commit()

@@ -26,13 +26,21 @@
               {% endif %}
               {{event.title}}</h5>
           </div>
-          <div class="col-md-2 pull-right">
+          <div class="col-md-1 pull-right">
             <button class="btn btn-secondary-outline edit-btn" data-bs-toggle="modal" data-bs-target="#editModal_{{event.id}}">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
               </svg>
             </button>
+          </div>
+          <div class="col-md-1 pull-right">
+            <a href="{{event.url}}" target="_blank" class="btn btn-secondary-outline">
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+                <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+              </svg>
+            </a>
           </div>
         </div>
         <p class="card-text">{{event.content}}</p>
@@ -170,6 +178,10 @@
           <label for="event_description" class="form-label">Event description:</label>
           <textarea class="form-control" id="event_description" name="event_description">{{event.content}}</textarea>
         </div>
+        <div class='md-3'>
+          <label for='event_url' class='form-label'>URL:</label>
+          <textarea class='form-control' id='event_url' name='event_url'>{{event.url}}</textarea>
+        </div>
         <div class="md-3">
           <!-- <label for="event_ddl" class="form-label">Finish date time:</label> -->
           <div class="row">
@@ -256,83 +268,7 @@
 
 
 <!-- Add Event Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content">
-<div class="modal-header">
-  <h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<form id="form1" action="{{ url_for('event.add_event') }}" method="POST">
-  <div class="modal-body">
-    <div class="md-3">
-      <label for="event_name" class="form-label">Event name:</label>
-      <input type="text" class="form-control" id="event_name" name="event_name" />
-    </div>
-    <div class="md-3">
-      <label for="event_description" class="form-label">Event description:</label>
-      <textarea class="form-control" id="event_description" name="event_description"></textarea>
-    </div>
-    <div class="md-3">
-      <!-- <label for="event_ddl" class="form-label">Finish date time:</label> -->
-      <div class="row">
-        <div class="col-8">
-          <label class="from-label">Dead Date:</label>
-          <input type="date" class="form-control" id="event_finish_date" name="event_finish_date" />
-        </div>
-        <div class="col-4">
-          <label class="from-label">Dead Time:</label>
-          <input type="time" class="form-control" id="event_finish_time" name="event_finish_time" />
-        </div>
-      </div>
-      <!-- <input type="datatime-local" class="form-select" aria-label="Default select example" /> -->
-    </div>
-    <div class="md-3">
-      <label for="label" class="from-label">Label:</label>
-      <div class="row">
-      <div class="col-1"></div>
-      <div class="form-check col">
-          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault1" value="1">
-          <label class="form-check-label" for="flexRadioDefault1">
-            <span class="badge bg-danger">Red</span>
-          </label>
-        </div>
-        <div class="form-check col">
-          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault2" value="2">
-          <label class="form-check-label" for="flexRadioDefault2">
-            <span class="badge bg-primary">Blue</span>
-          </label>
-        </div>
-        <div class="form-check col">
-          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault3" value="3">
-          <label class="form-check-label" for="flexRadioDefault3">
-            <span class="badge bg-warning">Yellow</span>
-          </label>
-        </div>
-        <div class="form-check col">
-          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault4" value="4">
-          <label class="form-check-label" for="flexRadioDefault4">
-            <span class="badge bg-success">Green</span>
-          </label>
-        </div>
-        <div class="form-check col">
-          <input class="form-check-input" type="radio" name="label" id="flexRadioDefault5" value="5" checked>
-          <label class="form-check-label" for="flexRadioDefault5">
-            <span class="badge bg-secondary">Other</span>
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <input type="hidden" value="{{list_id}}" name="list_id" id="list_id" />
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Confirm</button>
-  </div>
-</form>
-</div>
-</div>
-</div>
+
 
 
 
