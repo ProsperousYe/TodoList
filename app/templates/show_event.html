@@ -11,7 +11,7 @@
     <div class="card" style="width: 100%;">
       <div class="card-body">
         <div class="row">
-          <div class="col-md-10">
+          <div class="col-md-4">
             <h5 class="card-title">
               {% if event.label == 1 %}
               <span class="badge bg-danger p-2 border border-light rounded-circle"> </span>
@@ -25,6 +25,9 @@
               <span class="badge bg-secondary p-2 border border-light rounded-circle"> </span>
               {% endif %}
               {{event.title}}</h5>
+          </div>
+          <div class="col-md-6">
+            <h5 class="card-title">Due:{{event.setting_date}} / {{event.setting_month}}</h5>
           </div>
           <div class="col-md-1 pull-right">
             <button class="btn btn-secondary-outline edit-btn" data-bs-toggle="modal" data-bs-target="#editModal_{{event.id}}">
@@ -68,8 +71,12 @@
         <div class="row">
           <label class="form-label"></label>
         </div>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#finished_{{event.id}}"  value="{{event.id}}">Finished</button>
-        <!-- Finished Confirm -->
+        <div class="row">
+          <div class="col-md-2">
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#finished_{{event.id}}"  value="{{event.id}}">Finished</button>
+          </div>
+        </div>
+<!-- Finished Confirm -->
     </div>
     </div>
     <label class="form-label"></label>
